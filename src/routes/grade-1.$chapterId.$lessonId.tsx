@@ -79,26 +79,26 @@ function LessonPage() {
           <p className="mt-2 text-muted-foreground">{lesson.summary}</p>
         </div>
 
-        {lesson.lab ? (
-          <div className="space-y-8">
-            <LabFrame
-              title={labMeta[lesson.lab].title}
-              goal={labMeta[lesson.lab].goal}
-              conclusion={labMeta[lesson.lab].conclusion}
-            >
-              {lesson.lab === "free-fall" ? (
-                <FreeFallLab onMiyarSay={sayMiyar} />
-              ) : (
-                <ProjectileLab onMiyarSay={sayMiyar} />
-              )}
-            </LabFrame>
+        {lesson.lab ? (() => {
+          const labKey = lesson.lab as "free-fall" | "projectile";
+          const meta = labMeta[labKey];
+          return (
+            <div className="space-y-8">
+              <LabFrame title={meta.title} goal={meta.goal} conclusion={meta.conclusion}>
+                {labKey === "free-fall" ? (
+                  <FreeFallLab onMiyarSay={sayMiyar} />
+                ) : (
+                  <ProjectileLab onMiyarSay={sayMiyar} />
+                )}
+              </LabFrame>
 
-            <QuizSection
-              questions={quizzes[lesson.lab]}
-              onMiyarSay={(t: string, m?: "celebrate" | "encourage" | "thinking") => sayMiyar(t, m)}
-            />
-          </div>
-        ) : (
+              <QuizSection
+                questions={quizzes[labKey]}
+                onMiyarSay={(t: string, m?: "celebrate" | "encourage" | "thinking") => sayMiyar(t, m)}
+              />
+            </div>
+          );
+        })() : (
           <div className="rounded-3xl bg-card border border-border p-8 md:p-12 shadow-card text-center">
             <BookOpenText className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-xl font-display font-extrabold text-foreground mb-2">
