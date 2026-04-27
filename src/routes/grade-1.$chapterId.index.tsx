@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, FlaskConical, BookOpenText } from "lucide-react";
-import { grade1Chapters } from "@/data/curriculum";
+import { grade1Chapters, type Lesson } from "@/data/curriculum";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MiyarAssistant } from "@/components/MiyarAssistant";
 
@@ -48,7 +48,7 @@ function ChapterPage() {
         </div>
 
         <div className="grid gap-3">
-          {chapter.lessons.map((lesson, i) => (
+          {chapter.lessons.map((lesson: Lesson, i: number) => (
             <Link
               key={lesson.id}
               to="/grade-1/$chapterId/$lessonId"
@@ -81,7 +81,7 @@ function ChapterPage() {
 
       <MiyarAssistant
         message={{
-          text: chapter.lessons.some((l) => l.lab)
+          text: chapter.lessons.some((l: Lesson) => l.lab)
             ? "هذا الفصل يحتوي على تجربة مختبر تفاعلية! ابحثي عن أيقونة المختبر 🧪"
             : "اختاري درساً للبدء. سأكون معكِ في كل خطوة!",
           mood: "happy",

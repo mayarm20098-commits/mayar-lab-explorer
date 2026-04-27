@@ -95,7 +95,7 @@ function LessonPage() {
 
             <QuizSection
               questions={quizzes[lesson.lab]}
-              onMiyarSay={(t, m) => sayMiyar(t, m)}
+              onMiyarSay={(t: string, m?: "celebrate" | "encourage" | "thinking") => sayMiyar(t, m)}
             />
           </div>
         ) : (
