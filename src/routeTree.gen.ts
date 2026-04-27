@@ -10,33 +10,72 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as Grade1IndexRouteImport } from './routes/grade-1.index'
+import { Route as Grade1ChapterIdIndexRouteImport } from './routes/grade-1.$chapterId.index'
+import { Route as Grade1ChapterIdLessonIdRouteImport } from './routes/grade-1.$chapterId.$lessonId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Grade1IndexRoute = Grade1IndexRouteImport.update({
+  id: '/grade-1/',
+  path: '/grade-1/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Grade1ChapterIdIndexRoute = Grade1ChapterIdIndexRouteImport.update({
+  id: '/grade-1/$chapterId/',
+  path: '/grade-1/$chapterId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Grade1ChapterIdLessonIdRoute = Grade1ChapterIdLessonIdRouteImport.update({
+  id: '/grade-1/$chapterId/$lessonId',
+  path: '/grade-1/$chapterId/$lessonId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/grade-1/': typeof Grade1IndexRoute
+  '/grade-1/$chapterId/$lessonId': typeof Grade1ChapterIdLessonIdRoute
+  '/grade-1/$chapterId/': typeof Grade1ChapterIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/grade-1': typeof Grade1IndexRoute
+  '/grade-1/$chapterId/$lessonId': typeof Grade1ChapterIdLessonIdRoute
+  '/grade-1/$chapterId': typeof Grade1ChapterIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/grade-1/': typeof Grade1IndexRoute
+  '/grade-1/$chapterId/$lessonId': typeof Grade1ChapterIdLessonIdRoute
+  '/grade-1/$chapterId/': typeof Grade1ChapterIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/grade-1/'
+    | '/grade-1/$chapterId/$lessonId'
+    | '/grade-1/$chapterId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/grade-1' | '/grade-1/$chapterId/$lessonId' | '/grade-1/$chapterId'
+  id:
+    | '__root__'
+    | '/'
+    | '/grade-1/'
+    | '/grade-1/$chapterId/$lessonId'
+    | '/grade-1/$chapterId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  Grade1IndexRoute: typeof Grade1IndexRoute
+  Grade1ChapterIdLessonIdRoute: typeof Grade1ChapterIdLessonIdRoute
+  Grade1ChapterIdIndexRoute: typeof Grade1ChapterIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +87,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grade-1/': {
+      id: '/grade-1/'
+      path: '/grade-1'
+      fullPath: '/grade-1/'
+      preLoaderRoute: typeof Grade1IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grade-1/$chapterId/': {
+      id: '/grade-1/$chapterId/'
+      path: '/grade-1/$chapterId'
+      fullPath: '/grade-1/$chapterId/'
+      preLoaderRoute: typeof Grade1ChapterIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grade-1/$chapterId/$lessonId': {
+      id: '/grade-1/$chapterId/$lessonId'
+      path: '/grade-1/$chapterId/$lessonId'
+      fullPath: '/grade-1/$chapterId/$lessonId'
+      preLoaderRoute: typeof Grade1ChapterIdLessonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  Grade1IndexRoute: Grade1IndexRoute,
+  Grade1ChapterIdLessonIdRoute: Grade1ChapterIdLessonIdRoute,
+  Grade1ChapterIdIndexRoute: Grade1ChapterIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
