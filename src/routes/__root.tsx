@@ -33,10 +33,14 @@ export const Route = createRootRoute({
       { name: "description", content: "موقع تعليمي تفاعلي للفيزياء لطالبات الثانوية مع مساعدة ذكية وتجارب محاكاة حقيقية" },
       { name: "author", content: "Miyar Lab" },
       { property: "og:title", content: "مختبر مِيار الفيزيائي الذكي" },
-      { property: "og:description", content: "تعلّمي الفيزياء بأسلوب ممتع وتفاعلي" },
+      { property: "og:description", content: "موقع تعليمي تفاعلي للفيزياء لطالبات الثانوية مع مساعدة ذكية وتجارب محاكاة حقيقية" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "مختبر مِيار الفيزيائي الذكي" },
+      { name: "twitter:description", content: "موقع تعليمي تفاعلي للفيزياء لطالبات الثانوية مع مساعدة ذكية وتجارب محاكاة حقيقية" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a4b887ae-d1ae-4b01-b36d-45b7b4316bea/id-preview-6f18d1a5--85637628-adea-4b7f-9b90-35e9763d2945.lovable.app-1777298969695.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a4b887ae-d1ae-4b01-b36d-45b7b4316bea/id-preview-6f18d1a5--85637628-adea-4b7f-9b90-35e9763d2945.lovable.app-1777298969695.png" },
     ],
     links: [
       {
