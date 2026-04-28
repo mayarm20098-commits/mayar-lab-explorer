@@ -6,12 +6,14 @@ import type { QuizQuestion } from "@/data/quizzes";
 type Props = {
   questions: QuizQuestion[];
   onMiyarSay?: (text: string, mood?: "celebrate" | "encourage" | "thinking") => void;
+  onResult?: (score: number, mistakes: number, total: number) => void;
 };
 
-export function QuizSection({ questions, onMiyarSay }: Props) {
+export function QuizSection({ questions, onMiyarSay, onResult }: Props) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
+  const [mistakes, setMistakes] = useState(0);
   const [done, setDone] = useState(false);
 
   const q = questions[index];
@@ -24,6 +26,7 @@ export function QuizSection({ questions, onMiyarSay }: Props) {
       setScore((s) => s + 1);
       onMiyarSay?.("ممتاز! إجابة صحيحة 🌟", "celebrate");
     } else {
+      setMistakes((m) => m + 1);
       onMiyarSay?.("لا بأس، حاولي مرة أخرى. اقرئي التفسير 💡", "encourage");
     }
   }
@@ -31,7 +34,9 @@ export function QuizSection({ questions, onMiyarSay }: Props) {
   function next() {
     if (index + 1 >= questions.length) {
       setDone(true);
-      const pct = Math.round(((score + (selected === q.correctIndex ? 0 : 0)) / questions.length) * 100);
+      const finalScore = score;
+      const pct = Math.round((finalScore / questions.length) * 100);
+      onResult?.(finalScore, mistakes, questions.length);
       onMiyarSay?.(`أنهيتِ الاختبار! نتيجتك ${pct}%`, "celebrate");
     } else {
       setIndex((i) => i + 1);
@@ -43,6 +48,7 @@ export function QuizSection({ questions, onMiyarSay }: Props) {
     setIndex(0);
     setSelected(null);
     setScore(0);
+    setMistakes(0);
     setDone(false);
   }
 
