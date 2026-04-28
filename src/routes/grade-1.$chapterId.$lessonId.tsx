@@ -6,9 +6,10 @@ import { quizzes } from "@/data/quizzes";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MiyarAssistant, type MiyarMessage } from "@/components/MiyarAssistant";
 import { LabFrame } from "@/components/LabFrame";
-import { FreeFallLab } from "@/components/labs/FreeFallLab";
-import { ProjectileLab } from "@/components/labs/ProjectileLab";
 import { QuizSection } from "@/components/QuizSection";
+import { CompletionPanel } from "@/components/CompletionPanel";
+import { labRegistry } from "@/components/labs/registry";
+import { useLabProgress } from "@/lib/use-lab-progress";
 
 export const Route = createFileRoute("/grade-1/$chapterId/$lessonId")({
   loader: ({ params }) => {
@@ -30,31 +31,26 @@ export const Route = createFileRoute("/grade-1/$chapterId/$lessonId")({
   ),
 });
 
-const labMeta = {
-  "free-fall": {
-    title: "السقوط الحر",
-    goal: "اكتشفي كيف تؤثر الجاذبية على الأجسام الساقطة، وتأكدي بنفسك أن الكتلة لا تغيّر زمن السقوط في غياب مقاومة الهواء.",
-    conclusion:
-      "في السقوط الحر، تسارع جميع الأجسام نحو الأرض يساوي تسارع الجاذبية g (≈ 9.8 م/ث² على سطح الأرض)، بصرف النظر عن كتلتها.\n\nالمعادلتان الأساسيتان:\n• h = ½ g t²  (الارتفاع بدلالة الزمن)\n• v = g t   (السرعة عند الوصول)\n\nعند تفعيل مقاومة الهواء، تظهر قوة معاكسة للحركة فيتباطأ الجسم.",
-  },
-  projectile: {
-    title: "حركة المقذوف",
-    goal: "أصيبي الهدف بالمدفع! اكتشفي كيف تؤثر زاوية الإطلاق والسرعة على المسار والمدى الأفقي.",
-    conclusion:
-      "حركة المقذوف هي تركيب لحركتين مستقلتين:\n• حركة أفقية بسرعة ثابتة: vₓ = v·cos(θ)\n• حركة رأسية متسارعة بفعل الجاذبية: v_y = v·sin(θ) − g·t\n\n• المدى الأقصى: R = v² · sin(2θ) / g  ⇒ يكون أعظم عند θ = 45°.\n• الارتفاع الأقصى: H = v² · sin²(θ) / (2g).",
-  },
-} as const;
-
 function LessonPage() {
   const { chapter, lesson } = Route.useLoaderData();
+  const labKey = lesson.lab;
+  const labId = labKey ? `g1:${labKey}` : "";
+  const { progress, saveResult } = useLabProgress(labId);
+
   const [miyarMsg, setMiyarMsg] = useState<MiyarMessage | null>({
-    text: lesson.lab
-      ? "أهلاً بكِ في المختبر! اضبطي المتغيرات ثم ابدئي التجربة. لا تترددي في التجريب 🌟"
+    text: labKey
+      ? "أهلاً بكِ في المختبر! اضبطي المتغيرات ثم ابدئي التجربة 🌟"
       : `سنتعلم اليوم درس "${lesson.title}". هيا نبدأ!`,
     mood: "happy",
   });
+  const [quizScore, setQuizScore] = useState(0);
+  const [quizMistakes, setQuizMistakes] = useState(0);
+  const [quizTotal, setQuizTotal] = useState(0);
 
   const sayMiyar = (text: string, mood?: MiyarMessage["mood"]) => setMiyarMsg({ text, mood });
+
+  const meta = labKey ? labRegistry[labKey] : null;
+  const labQuiz = labKey ? quizzes[labKey] ?? [] : [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -79,35 +75,42 @@ function LessonPage() {
           <p className="mt-2 text-muted-foreground">{lesson.summary}</p>
         </div>
 
-        {lesson.lab ? (() => {
-          const labKey = lesson.lab as "free-fall" | "projectile";
-          const meta = labMeta[labKey];
-          return (
-            <div className="space-y-8">
-              <LabFrame title={meta.title} goal={meta.goal} conclusion={meta.conclusion}>
-                {labKey === "free-fall" ? (
-                  <FreeFallLab onMiyarSay={sayMiyar} />
-                ) : (
-                  <ProjectileLab onMiyarSay={sayMiyar} />
-                )}
-              </LabFrame>
+        {meta ? (
+          <div className="space-y-8">
+            <LabFrame title={meta.title} goal={meta.goal} conclusion={meta.conclusion}>
+              <meta.Component onMiyarSay={sayMiyar} />
+            </LabFrame>
 
+            {labQuiz.length > 0 && (
               <QuizSection
-                questions={quizzes[labKey]}
-                onMiyarSay={(t: string, m?: "celebrate" | "encourage" | "thinking") => sayMiyar(t, m)}
+                questions={labQuiz}
+                onResult={(score, mistakes, total) => {
+                  setQuizScore(score);
+                  setQuizMistakes(mistakes);
+                  setQuizTotal(total);
+                }}
+                onMiyarSay={(t, m) => sayMiyar(t, m)}
               />
-            </div>
-          );
-        })() : (
+            )}
+
+            <CompletionPanel
+              labId={labId}
+              quizScore={quizScore}
+              quizTotal={quizTotal || labQuiz.length}
+              mistakes={quizMistakes}
+              completed={progress?.completed ?? false}
+              pointsEarned={progress?.points_earned ?? 0}
+              onComplete={() => saveResult(quizScore, quizTotal || labQuiz.length, quizMistakes)}
+            />
+          </div>
+        ) : (
           <div className="rounded-3xl bg-card border border-border p-8 md:p-12 shadow-card text-center">
             <BookOpenText className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-xl font-display font-extrabold text-foreground mb-2">
               قريباً جداً ✨
             </h2>
             <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
-              نعمل حالياً على إعداد محتوى تفاعلي ومميز لهذا الدرس. في هذه النسخة، التجارب التفاعلية
-              متاحة في درسي <span className="font-bold text-primary">السقوط الحر</span> و
-              <span className="font-bold text-primary"> حركة المقذوف</span>.
+              نعمل على إعداد محتوى تفاعلي مميز لهذا الدرس.
             </p>
             <Link
               to="/grade-1/$chapterId"
