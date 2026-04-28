@@ -1,8 +1,8 @@
 export type Lesson = {
   id: string;
   title: string;
-  /** which lab simulation, if any, is attached */
-  lab?: "free-fall" | "projectile";
+  /** which lab simulation, if any, is attached. Use any string lab key. */
+  lab?: string;
   summary: string;
 };
 
@@ -23,8 +23,8 @@ export const grade1Chapters: Chapter[] = [
     description: "الرياضيات والفيزياء، والقياس",
     emoji: "📐",
     lessons: [
-      { id: "1-1", title: "الرياضيات والفيزياء", summary: "أساسيات الترميز العلمي والوحدات" },
-      { id: "1-2", title: "القياس", summary: "الدقة والضبط وعرض البيانات" },
+      { id: "1-1", title: "الرياضيات والفيزياء", lab: "unit-converter", summary: "محوّل وحدات تفاعلي مع الترميز العلمي" },
+      { id: "1-2", title: "القياس", lab: "measurement", summary: "تجربة الدقة والضبط بالمسطرة والميزان" },
     ],
   },
   {
@@ -34,10 +34,10 @@ export const grade1Chapters: Chapter[] = [
     description: "تصوير الحركة، الموقع والزمن، السرعة",
     emoji: "🏃‍♀️",
     lessons: [
-      { id: "2-1", title: "تصوير الحركة", summary: "المخططات الزمنية والمتجهات" },
-      { id: "2-2", title: "الموقع والزمن", summary: "الإزاحة وتحديد الموقع" },
-      { id: "2-3", title: "منحنى الموقع/الزمن", summary: "قراءة المنحنيات وتحليلها" },
-      { id: "2-4", title: "السرعة", summary: "السرعة المتوسطة واللحظية" },
+      { id: "2-1", title: "تصوير الحركة", lab: "motion-diagram", summary: "مخططات حركة بفترات زمنية متساوية" },
+      { id: "2-2", title: "الموقع والزمن", lab: "position-time", summary: "بناء منحنى الموقع/الزمن" },
+      { id: "2-3", title: "منحنى الموقع/الزمن", lab: "position-time", summary: "قراءة المنحنيات وتحليلها" },
+      { id: "2-4", title: "السرعة", lab: "velocity", summary: "السرعة المتوسطة واللحظية" },
     ],
   },
   {
@@ -47,8 +47,8 @@ export const grade1Chapters: Chapter[] = [
     description: "التسارع، الحركة بتسارع ثابت، السقوط الحر",
     emoji: "🚀",
     lessons: [
-      { id: "3-1", title: "التسارع", summary: "تعريف التسارع وحسابه" },
-      { id: "3-2", title: "الحركة بتسارع ثابت", summary: "معادلات الحركة الأساسية" },
+      { id: "3-1", title: "التسارع", lab: "acceleration", summary: "محاكاة سيارة متسارعة وتغير السرعة" },
+      { id: "3-2", title: "الحركة بتسارع ثابت", lab: "acceleration", summary: "معادلات الحركة الأساسية" },
       { id: "3-3", title: "السقوط الحر", lab: "free-fall", summary: "تجربة محاكاة السقوط تحت تأثير الجاذبية" },
     ],
   },
@@ -59,9 +59,9 @@ export const grade1Chapters: Chapter[] = [
     description: "القوة والحركة، قوانين نيوتن، التأثر المتبادل",
     emoji: "⚖️",
     lessons: [
-      { id: "4-1", title: "القوة والحركة", summary: "العلاقة بين القوة وحركة الأجسام" },
-      { id: "4-2", title: "قوانين نيوتن", summary: "القوانين الثلاثة وتطبيقاتها" },
-      { id: "4-3", title: "قوى التأثر المتبادل", summary: "الفعل ورد الفعل" },
+      { id: "4-1", title: "القوة والحركة", lab: "newton-second", summary: "قانون نيوتن الثاني: F = ma" },
+      { id: "4-2", title: "قوانين نيوتن", lab: "newton-second", summary: "تطبيق القوانين الثلاثة" },
+      { id: "4-3", title: "قوى التأثر المتبادل", lab: "action-reaction", summary: "محاكاة الفعل ورد الفعل" },
     ],
   },
   {
@@ -71,9 +71,9 @@ export const grade1Chapters: Chapter[] = [
     description: "المتجهات، الاحتكاك، القوة في بُعدين",
     emoji: "🧲",
     lessons: [
-      { id: "5-1", title: "المتجهات", summary: "جمع المتجهات وتحليلها" },
-      { id: "5-2", title: "الاحتكاك", summary: "أنواع الاحتكاك ومعاملاته" },
-      { id: "5-3", title: "القوة والحركة في بُعدين", summary: "تحليل القوى على المنحدر" },
+      { id: "5-1", title: "المتجهات", lab: "vectors", summary: "جامع متجهات تفاعلي بصرياً" },
+      { id: "5-2", title: "الاحتكاك", lab: "friction", summary: "أنواع الاحتكاك ومعاملاته" },
+      { id: "5-3", title: "القوة والحركة في بُعدين", lab: "incline", summary: "تحليل القوى على المنحدر" },
     ],
   },
   {
@@ -84,8 +84,8 @@ export const grade1Chapters: Chapter[] = [
     emoji: "🎯",
     lessons: [
       { id: "6-1", title: "حركة المقذوف", lab: "projectile", summary: "تجربة محاكاة المدفع وإصابة الهدف" },
-      { id: "6-2", title: "الحركة الدائرية", summary: "السرعة الزاوية والقوة المركزية" },
-      { id: "6-3", title: "السرعة النسبية", summary: "الحركة بالنسبة لمراجع مختلفة" },
+      { id: "6-2", title: "الحركة الدائرية", lab: "circular", summary: "السرعة الزاوية والقوة المركزية" },
+      { id: "6-3", title: "السرعة النسبية", lab: "relative-velocity", summary: "الحركة بالنسبة لمراجع مختلفة" },
     ],
   },
 ];
@@ -96,4 +96,11 @@ export function findLesson(chapterId: string, lessonId: string) {
   const lesson = chapter.lessons.find((l) => l.id === lessonId);
   if (!lesson) return null;
   return { chapter, lesson };
+}
+
+/** Total number of unique labs across grade 1 (used for progress %) */
+export function getAllGrade1LabIds(): string[] {
+  const set = new Set<string>();
+  for (const c of grade1Chapters) for (const l of c.lessons) if (l.lab) set.add(`g1:${l.lab}`);
+  return Array.from(set);
 }
