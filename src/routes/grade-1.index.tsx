@@ -81,7 +81,7 @@ function Grade1Page() {
       </section>
 
       <MiyarAssistant
-        message={{ text: "اختاري الفصل الذي يثير فضولك! الفصل الثالث والسادس فيهما تجارب مثيرة 🚀", mood: "happy" }}
+        message={{ text: "اختاري الفصل الذي يثير فضولك! كل الفصول فيها تجارب تفاعلية 🚀", mood: "happy" }}
       />
     </div>
   );

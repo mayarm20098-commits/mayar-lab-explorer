@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Trophy, LogOut, Sparkles } from "lucide-react";
+import { Trophy, LogOut, Sparkles, Copy, Users, Check } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -8,6 +8,8 @@ import { CommentsSection } from "@/components/CommentsSection";
 import { BADGES } from "@/lib/use-lab-progress";
 import { getAllGrade1LabIds } from "@/data/curriculum";
 import { Progress } from "@/components/ui/progress";
+import { sounds } from "@/lib/sounds";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -50,69 +52,77 @@ function ProfilePage() {
   const accuracy = totalQs > 0 ? Math.round((totalCorrect / totalQs) * 100) : 0;
   const overallPct = totalLabs > 0 ? Math.round((completedCount / totalLabs) * 100) : 0;
 
+  const isTeacher = profile.role === "teacher";
+  // Title: "العالِمة + اسم الطالبة" (use scientist_name which we set to that format)
+  const displayTitle = isTeacher ? `المعلمة ${profile.display_name}` : (profile.scientist_name || `العالِمة ${profile.display_name}`);
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <section className="container mx-auto px-4 pt-8 pb-16 max-w-4xl">
-        {/* Header card */}
         <div className="rounded-3xl bg-gradient-card text-primary-foreground p-6 md:p-8 shadow-deep mb-6">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="h-20 w-20 rounded-full bg-background/20 flex items-center justify-center text-5xl">
               {profile.avatar_emoji}
             </div>
             <div className="flex-1">
-              <div className="text-xs opacity-80">باسم العالمة</div>
-              <h1 className="text-2xl font-display font-extrabold">{profile.scientist_name}</h1>
-              <div className="text-sm opacity-90 mt-0.5">{profile.display_name}</div>
+              <div className="text-xs opacity-80">{isTeacher ? "حساب معلمة" : "حساب طالبة"}</div>
+              <h1 className="text-2xl font-display font-extrabold">{displayTitle}</h1>
             </div>
-            <div className="text-center">
-              <Trophy className="h-7 w-7 mx-auto mb-1" />
-              <div className="text-3xl font-display font-extrabold">{profile.total_points}</div>
-              <div className="text-xs opacity-80">نقطة</div>
-            </div>
-            <button onClick={signOut} className="bg-background/20 hover:bg-background/30 px-3 py-2 rounded-full text-sm font-bold flex items-center gap-1">
+            {!isTeacher && (
+              <div className="text-center">
+                <Trophy className="h-7 w-7 mx-auto mb-1" />
+                <div className="text-3xl font-display font-extrabold">{profile.total_points}</div>
+                <div className="text-xs opacity-80">نقطة</div>
+              </div>
+            )}
+            <button onClick={() => { sounds.click(); signOut(); }} className="bg-background/20 hover:bg-background/30 px-3 py-2 rounded-full text-sm font-bold flex items-center gap-1">
               <LogOut className="h-4 w-4" /> خروج
             </button>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <StatCard label="تجارب مكتملة" value={`${completedCount} / ${totalLabs}`} />
-          <StatCard label="نسبة الإجابات الصحيحة" value={`${accuracy}%`} />
-          <StatCard label="التقدم العام" value={`${overallPct}%`} />
-        </div>
+        {isTeacher ? (
+          <TeacherDashboard userId={user.id} />
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <StatCard label="تجارب مكتملة" value={`${completedCount} / ${totalLabs}`} />
+              <StatCard label="نسبة الإجابات الصحيحة" value={`${accuracy}%`} />
+              <StatCard label="التقدم العام" value={`${overallPct}%`} />
+            </div>
 
-        <div className="rounded-3xl bg-card border border-border p-5 shadow-card mb-6">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-bold text-foreground">تقدمكِ الإجمالي</span>
-            <span className="text-sm font-mono text-primary">{overallPct}%</span>
-          </div>
-          <Progress value={overallPct} />
-        </div>
+            <div className="rounded-3xl bg-card border border-border p-5 shadow-card mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-bold text-foreground">تقدمكِ الإجمالي</span>
+                <span className="text-sm font-mono text-primary">{overallPct}%</span>
+              </div>
+              <Progress value={overallPct} />
+            </div>
 
-        {/* Badges */}
-        <div className="rounded-3xl bg-card border border-border p-5 shadow-card mb-6">
-          <h2 className="text-lg font-display font-extrabold text-foreground flex items-center gap-2 mb-4">
-            <Sparkles className="h-5 w-5 text-primary" /> الشارات
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {Object.entries(BADGES).map(([key, b]) => {
-              const earned = badges.includes(key);
-              return (
-                <div key={key} className={`rounded-2xl p-3 text-center border-2 transition-all ${earned ? "border-success bg-success/5" : "border-border bg-muted/30 opacity-50"}`}>
-                  <div className="text-3xl mb-1">{b.emoji}</div>
-                  <div className="font-bold text-sm text-foreground">{b.name}</div>
-                  <div className="text-[11px] text-muted-foreground mt-0.5">{b.description}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+            <div className="rounded-3xl bg-card border border-border p-5 shadow-card mb-6">
+              <h2 className="text-lg font-display font-extrabold text-foreground flex items-center gap-2 mb-4">
+                <Sparkles className="h-5 w-5 text-primary" /> الشارات
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {Object.entries(BADGES).map(([key, b]) => {
+                  const earned = badges.includes(key);
+                  return (
+                    <div key={key} className={`rounded-2xl p-3 text-center border-2 transition-all ${earned ? "border-success bg-success/5" : "border-border bg-muted/30 opacity-50"}`}>
+                      <div className="text-3xl mb-1">{b.emoji}</div>
+                      <div className="font-bold text-sm text-foreground">{b.name}</div>
+                      <div className="text-[11px] text-muted-foreground mt-0.5">{b.description}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-        <Link to="/grade-1" className="block text-center bg-primary text-primary-foreground py-3 rounded-full font-bold shadow-glow mb-6">
-          متابعة التعلّم →
-        </Link>
+            <Link to="/grade-1" className="block text-center bg-primary text-primary-foreground py-3 rounded-full font-bold shadow-glow mb-6">
+              متابعة التعلّم →
+            </Link>
+          </>
+        )}
 
         <CommentsSection />
       </section>
@@ -125,6 +135,115 @@ function StatCard({ label, value }: { label: string; value: string }) {
     <div className="rounded-3xl bg-card border border-border p-5 shadow-card text-center">
       <div className="text-xs text-muted-foreground mb-1">{label}</div>
       <div className="text-2xl font-display font-extrabold text-primary">{value}</div>
+    </div>
+  );
+}
+
+type StudentRow = {
+  id: string;
+  display_name: string;
+  avatar_emoji: string;
+  total_points: number;
+  completed: number;
+};
+
+function TeacherDashboard({ userId }: { userId: string }) {
+  const [classroom, setClassroom] = useState<{ id: string; name: string; invite_code: string } | null>(null);
+  const [students, setStudents] = useState<StudentRow[]>([]);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { data: c } = await supabase
+        .from("classrooms")
+        .select("id, name, invite_code")
+        .eq("teacher_id", userId)
+        .maybeSingle();
+      if (c) {
+        setClassroom(c);
+        const { data: profs } = await supabase
+          .from("profiles")
+          .select("id, display_name, avatar_emoji, total_points")
+          .eq("classroom_id", c.id);
+        const list = (profs ?? []) as Omit<StudentRow, "completed">[];
+        // get completed counts
+        const { data: prog } = await supabase
+          .from("lab_progress")
+          .select("user_id, completed")
+          .in("user_id", list.map((s) => s.id))
+          .eq("completed", true);
+        const counts: Record<string, number> = {};
+        (prog ?? []).forEach((r: { user_id: string }) => { counts[r.user_id] = (counts[r.user_id] ?? 0) + 1; });
+        setStudents(list.map((s) => ({ ...s, completed: counts[s.id] ?? 0 })));
+      }
+    })();
+  }, [userId]);
+
+  function copyCode() {
+    if (!classroom) return;
+    navigator.clipboard.writeText(classroom.invite_code);
+    sounds.success();
+    setCopied(true);
+    toast.success("نُسخ الكود!");
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  if (!classroom) return <div className="text-center text-muted-foreground py-8">جارِ التحميل...</div>;
+
+  return (
+    <div className="space-y-6">
+      {/* Invite code */}
+      <div className="rounded-3xl bg-card border-2 border-primary/30 p-6 shadow-card">
+        <div className="text-xs text-muted-foreground mb-2">كود الدعوة لطالباتكِ</div>
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="text-4xl font-mono font-extrabold tracking-[0.4em] text-primary bg-primary/5 px-6 py-3 rounded-2xl border-2 border-dashed border-primary/40">
+            {classroom.invite_code}
+          </div>
+          <button
+            onClick={copyCode}
+            className="bg-primary text-primary-foreground px-4 py-3 rounded-full font-bold flex items-center gap-1.5 shadow-glow hover:scale-105 transition-transform"
+          >
+            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            {copied ? "تم" : "نسخ"}
+          </button>
+        </div>
+        <p className="text-xs text-muted-foreground mt-3">
+          أرسلي هذا الكود لطالباتك لينضممن إلى فصلكِ عند تسجيل حساب جديد.
+        </p>
+      </div>
+
+      {/* Students list */}
+      <div className="rounded-3xl bg-card border border-border p-5 shadow-card">
+        <h2 className="text-lg font-display font-extrabold text-foreground flex items-center gap-2 mb-4">
+          <Users className="h-5 w-5 text-primary" /> طالباتكِ ({students.length})
+        </h2>
+        {students.length === 0 ? (
+          <p className="text-sm text-muted-foreground text-center py-8">
+            لم تنضم أي طالبة بعد. شاركي الكود معهن!
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {students
+              .sort((a, b) => b.total_points - a.total_points)
+              .map((s, i) => (
+                <div key={s.id} className="flex items-center gap-3 bg-muted/30 rounded-2xl p-3">
+                  <div className="text-2xl">{s.avatar_emoji}</div>
+                  <div className="flex-1">
+                    <div className="font-bold text-foreground">العالِمة {s.display_name}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {s.completed} تجربة مكتملة
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-extrabold text-primary">{s.total_points}</div>
+                    <div className="text-[10px] text-muted-foreground">نقطة</div>
+                  </div>
+                  {i === 0 && s.total_points > 0 && <Trophy className="h-5 w-5 text-amber-500" />}
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
