@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/lib/auth-context";
+import { useAuth, type AppRole } from "@/lib/auth-context";
 import { sounds } from "@/lib/sounds";
 import { toast } from "sonner";
+import { GraduationCap, BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -14,23 +15,18 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const SCIENTISTS = [
-  { name: "ماري كوري", emoji: "👩‍🔬" },
-  { name: "ليز مايتنر", emoji: "⚛️" },
-  { name: "روزاليند فرانكلين", emoji: "🧬" },
-  { name: "هيدي لامار", emoji: "📡" },
-  { name: "إيمي نويثر", emoji: "🧮" },
-  { name: "سامية الأمودي", emoji: "🔭" },
-];
+const EMOJI_OPTIONS = ["👩‍🔬", "👩‍🎓", "🧕", "👩‍🚀", "🦋", "🌸", "⭐", "🌙", "🦄", "🌷", "🐱", "🦊"];
 
 function AuthPage() {
   const { user, signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [role, setRole] = useState<AppRole>("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [scientist, setScientist] = useState(SCIENTISTS[0]);
+  const [emoji, setEmoji] = useState(EMOJI_OPTIONS[0]);
+  const [inviteCode, setInviteCode] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -50,7 +46,19 @@ function AuthPage() {
         navigate({ to: "/profile" });
       }
     } else {
-      const { error } = await signUp(email, password, displayName || "طالبة", scientist.name, scientist.emoji);
+      if (!displayName.trim()) {
+        toast.error("اكتبي اسمكِ");
+        setLoading(false);
+        return;
+      }
+      const { error } = await signUp({
+        email,
+        password,
+        displayName: displayName.trim().slice(0, 40),
+        avatarEmoji: emoji,
+        role,
+        inviteCode: role === "student" ? inviteCode : undefined,
+      });
       if (error) toast.error(error);
       else {
         sounds.celebrate();
@@ -70,33 +78,84 @@ function AuthPage() {
             {mode === "signin" ? "أهلاً بكِ من جديد" : "انضمي إلى مختبر مِيار"}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {mode === "signin" ? "سجّلي الدخول لمتابعة تقدمكِ" : "أنشئي حسابكِ واحفظي نقاطك وشاراتك"}
+            {mode === "signin" ? "سجّلي الدخول لمتابعة تقدمكِ" : "أنشئي حسابكِ وابدئي رحلة الفيزياء"}
           </p>
         </div>
 
         <form onSubmit={submit} className="space-y-4">
           {mode === "signup" && (
             <>
+              {/* Role selector */}
+              <div>
+                <label className="text-sm font-bold text-foreground block mb-1.5">من أنتِ؟</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => { sounds.pop(); setRole("student"); }}
+                    className={`rounded-2xl border-2 p-3 text-sm font-bold transition-all flex flex-col items-center gap-1 ${role === "student" ? "border-primary bg-primary/10" : "border-border bg-card"}`}
+                  >
+                    <BookOpen className="h-5 w-5" />
+                    طالبة
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { sounds.pop(); setRole("teacher"); }}
+                    className={`rounded-2xl border-2 p-3 text-sm font-bold transition-all flex flex-col items-center gap-1 ${role === "teacher" ? "border-primary bg-primary/10" : "border-border bg-card"}`}
+                  >
+                    <GraduationCap className="h-5 w-5" />
+                    معلمة
+                  </button>
+                </div>
+              </div>
+
               <div>
                 <label className="text-sm font-bold text-foreground block mb-1.5">اسمكِ</label>
-                <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} required className="w-full rounded-xl border-2 border-border bg-background p-2.5" />
+                <input
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  required
+                  maxLength={40}
+                  placeholder="مثال: ميار"
+                  className="w-full rounded-xl border-2 border-border bg-background p-2.5"
+                />
+                {role === "student" && displayName.trim() && (
+                  <div className="text-xs text-primary mt-1">
+                    سيظهر اسمكِ هكذا: <span className="font-bold">العالِمة {displayName.trim()}</span>
+                  </div>
+                )}
               </div>
+
               <div>
-                <label className="text-sm font-bold text-foreground block mb-1.5">اختاري عالمتكِ المفضلة</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {SCIENTISTS.map((s) => (
+                <label className="text-sm font-bold text-foreground block mb-1.5">اختاري إيموجي</label>
+                <div className="grid grid-cols-6 gap-2">
+                  {EMOJI_OPTIONS.map((em) => (
                     <button
                       type="button"
-                      key={s.name}
-                      onClick={() => { sounds.pop(); setScientist(s); }}
-                      className={`rounded-xl border-2 p-2 text-xs font-bold transition-all ${scientist.name === s.name ? "border-primary bg-primary/10" : "border-border bg-card"}`}
+                      key={em}
+                      onClick={() => { sounds.pop(); setEmoji(em); }}
+                      className={`rounded-xl border-2 p-2 text-2xl transition-all ${emoji === em ? "border-primary bg-primary/10 scale-110" : "border-border bg-card"}`}
                     >
-                      <div className="text-2xl">{s.emoji}</div>
-                      <div className="mt-1">{s.name}</div>
+                      {em}
                     </button>
                   ))}
                 </div>
               </div>
+
+              {role === "student" && (
+                <div>
+                  <label className="text-sm font-bold text-foreground block mb-1.5">
+                    كود المعلمة <span className="text-muted-foreground font-normal">(اختياري)</span>
+                  </label>
+                  <input
+                    value={inviteCode}
+                    onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
+                    maxLength={6}
+                    dir="ltr"
+                    placeholder="ABC123"
+                    className="w-full rounded-xl border-2 border-border bg-background p-2.5 font-mono tracking-widest text-center"
+                  />
+                </div>
+              )}
             </>
           )}
 
