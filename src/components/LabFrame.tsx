@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Lightbulb, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Lightbulb, X, Target } from "lucide-react";
+import { sounds } from "@/lib/sounds";
 
 type Props = {
   title: string;
@@ -9,35 +10,48 @@ type Props = {
 };
 
 export function LabFrame({ title, goal, conclusion, children }: Props) {
-  const [showGoal, setShowGoal] = useState(false);
+  const [showGoal, setShowGoal] = useState(true); // auto-open on entry
   const [showConclusion, setShowConclusion] = useState(false);
+
+  // ensure each lab navigation re-opens the goal
+  useEffect(() => {
+    setShowGoal(true);
+  }, [title]);
 
   return (
     <section className="rounded-3xl bg-gradient-to-br from-secondary/40 to-accent/30 border border-border p-4 md:p-6 shadow-card">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
         <h3 className="text-lg md:text-xl font-display font-extrabold text-foreground flex items-center gap-2">
           🧪 {title}
         </h3>
         <div className="flex gap-2">
           <button
-            onClick={() => setShowGoal(true)}
-            className="h-10 w-10 rounded-full bg-gradient-card text-primary-foreground shadow-glow flex items-center justify-center hover:scale-110 transition-transform"
+            onClick={() => { sounds.click(); setShowGoal(true); }}
+            className="h-10 px-3 rounded-full bg-gradient-card text-primary-foreground shadow-glow flex items-center gap-1.5 text-sm font-bold hover:scale-105 transition-transform"
             title="هدف التجربة"
           >
-            <Lightbulb className="h-5 w-5 fill-current" />
+            <Target className="h-4 w-4" /> الهدف
           </button>
           <button
-            onClick={() => setShowConclusion(true)}
-            className="h-10 px-4 rounded-full bg-card border border-primary/30 text-primary font-bold text-sm shadow-soft hover:bg-primary hover:text-primary-foreground transition-colors"
+            onClick={() => { sounds.click(); setShowConclusion(true); }}
+            className="h-10 px-4 rounded-full bg-card border border-primary/30 text-primary font-bold text-sm shadow-soft hover:bg-primary hover:text-primary-foreground transition-colors flex items-center gap-1.5"
           >
-            الاستنتاج العلمي
+            <Lightbulb className="h-4 w-4" /> الاستنتاج
           </button>
+        </div>
+      </div>
+
+      {/* Always-visible goal banner */}
+      <div className="mb-4 rounded-2xl bg-primary/10 border border-primary/20 p-3 flex items-start gap-2">
+        <Target className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+        <div className="text-sm text-foreground leading-relaxed">
+          <span className="font-bold text-primary">هدف التجربة: </span>
+          {goal}
         </div>
       </div>
 
       {children}
 
-      {/* Goal Modal */}
       {showGoal && (
         <Modal title="🎯 هدف التجربة" onClose={() => setShowGoal(false)}>
           <p className="text-base leading-relaxed text-foreground">{goal}</p>
