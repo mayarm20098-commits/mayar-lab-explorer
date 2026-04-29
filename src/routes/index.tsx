@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Lock, ArrowLeft, Sparkles, Atom, FlaskConical } from "lucide-react";
+import { Lock, ArrowLeft, Sparkles, Atom, FlaskConical, LogIn } from "lucide-react";
 import { MiyarAssistant } from "@/components/MiyarAssistant";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,18 +58,19 @@ function HomePage() {
       </div>
 
       {/* Header */}
-      <header className="container mx-auto px-4 pt-8 pb-4 flex items-center justify-center">
+      <header className="container mx-auto px-4 pt-6 pb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="h-12 w-12 rounded-2xl bg-gradient-card shadow-glow flex items-center justify-center text-2xl">
             ⚛️
           </div>
-          <div className="text-center">
+          <div className="text-right">
             <div className="font-display font-extrabold text-foreground text-lg leading-none">
               مختبر مِيار
             </div>
             <div className="text-xs text-muted-foreground mt-0.5">الفيزياء التفاعلية الذكية</div>
           </div>
         </div>
+        <AccountButton />
       </header>
 
       {/* Hero */}
