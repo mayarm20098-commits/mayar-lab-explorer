@@ -171,3 +171,31 @@ function HomePage() {
     </div>
   );
 }
+
+function AccountButton() {
+  const { user, profile } = useAuth();
+  if (user && profile) {
+    return (
+      <Link
+        to="/profile"
+        className="flex items-center gap-2 bg-card border-2 border-primary/30 hover:border-primary px-3 py-2 rounded-full text-sm font-bold shadow-soft transition-colors"
+      >
+        <span className="text-xl">{profile.avatar_emoji}</span>
+        <span className="hidden sm:inline">{profile.display_name}</span>
+        {profile.role !== "teacher" && (
+          <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-mono">
+            {profile.total_points}
+          </span>
+        )}
+      </Link>
+    );
+  }
+  return (
+    <Link
+      to="/auth"
+      className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold shadow-glow hover:scale-105 transition-transform"
+    >
+      <LogIn className="h-4 w-4" /> دخول
+    </Link>
+  );
+}
