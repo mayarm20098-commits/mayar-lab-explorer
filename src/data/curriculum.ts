@@ -36,7 +36,7 @@ export const grade1Chapters: Chapter[] = [
     lessons: [
       { id: "2-1", title: "تصوير الحركة", lab: "motion-diagram", summary: "مخططات حركة بفترات زمنية متساوية" },
       { id: "2-2", title: "الموقع والزمن", lab: "position-time", summary: "بناء منحنى الموقع/الزمن" },
-      { id: "2-3", title: "منحنى الموقع/الزمن", lab: "position-time", summary: "قراءة المنحنيات وتحليلها" },
+      { id: "2-3", title: "منحنى السرعة/الزمن", lab: "velocity", summary: "قراءة منحنى السرعة وتحليل المساحة تحته" },
       { id: "2-4", title: "السرعة", lab: "velocity", summary: "السرعة المتوسطة واللحظية" },
     ],
   },
