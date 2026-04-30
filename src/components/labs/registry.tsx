@@ -14,6 +14,16 @@ import { FrictionLab } from "./FrictionLab";
 import { InclineLab } from "./InclineLab";
 import { CircularLab } from "./CircularLab";
 import { RelativeVelocityLab } from "./RelativeVelocityLab";
+import { OhmLab } from "./g3s2/OhmLab";
+import { ResistorColorLab } from "./g3s2/ResistorColorLab";
+import { SeriesParallelLab } from "./g3s2/SeriesParallelLab";
+import { MagneticFieldLab } from "./g3s2/MagneticFieldLab";
+import { InductionLab } from "./g3s2/InductionLab";
+import { TransformerLab } from "./g3s2/TransformerLab";
+import { PhotoelectricLab } from "./g3s2/PhotoelectricLab";
+import { BohrLab } from "./g3s2/BohrLab";
+import { SemiconductorLab } from "./g3s2/SemiconductorLab";
+import { HalfLifeLab } from "./g3s2/HalfLifeLab";
 
 type LabMeta = {
   title: string;
