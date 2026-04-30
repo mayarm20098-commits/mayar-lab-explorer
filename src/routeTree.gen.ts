@@ -12,9 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as Grade3IndexRouteImport } from './routes/grade-3.index'
 import { Route as Grade1IndexRouteImport } from './routes/grade-1.index'
+import { Route as Grade3SemesterIdIndexRouteImport } from './routes/grade-3.$semesterId.index'
 import { Route as Grade1ChapterIdIndexRouteImport } from './routes/grade-1.$chapterId.index'
 import { Route as Grade1ChapterIdLessonIdRouteImport } from './routes/grade-1.$chapterId.$lessonId'
+import { Route as Grade3SemesterIdChapterIdIndexRouteImport } from './routes/grade-3.$semesterId.$chapterId.index'
+import { Route as Grade3SemesterIdChapterIdLessonIdRouteImport } from './routes/grade-3.$semesterId.$chapterId.$lessonId'
 
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
@@ -31,9 +35,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Grade3IndexRoute = Grade3IndexRouteImport.update({
+  id: '/grade-3/',
+  path: '/grade-3/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Grade1IndexRoute = Grade1IndexRouteImport.update({
   id: '/grade-1/',
   path: '/grade-1/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Grade3SemesterIdIndexRoute = Grade3SemesterIdIndexRouteImport.update({
+  id: '/grade-3/$semesterId/',
+  path: '/grade-3/$semesterId/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Grade1ChapterIdIndexRoute = Grade1ChapterIdIndexRouteImport.update({
@@ -46,22 +60,42 @@ const Grade1ChapterIdLessonIdRoute = Grade1ChapterIdLessonIdRouteImport.update({
   path: '/grade-1/$chapterId/$lessonId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Grade3SemesterIdChapterIdIndexRoute =
+  Grade3SemesterIdChapterIdIndexRouteImport.update({
+    id: '/grade-3/$semesterId/$chapterId/',
+    path: '/grade-3/$semesterId/$chapterId/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Grade3SemesterIdChapterIdLessonIdRoute =
+  Grade3SemesterIdChapterIdLessonIdRouteImport.update({
+    id: '/grade-3/$semesterId/$chapterId/$lessonId',
+    path: '/grade-3/$semesterId/$chapterId/$lessonId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/profile': typeof ProfileRoute
   '/grade-1/': typeof Grade1IndexRoute
+  '/grade-3/': typeof Grade3IndexRoute
   '/grade-1/$chapterId/$lessonId': typeof Grade1ChapterIdLessonIdRoute
   '/grade-1/$chapterId/': typeof Grade1ChapterIdIndexRoute
+  '/grade-3/$semesterId/': typeof Grade3SemesterIdIndexRoute
+  '/grade-3/$semesterId/$chapterId/$lessonId': typeof Grade3SemesterIdChapterIdLessonIdRoute
+  '/grade-3/$semesterId/$chapterId/': typeof Grade3SemesterIdChapterIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/profile': typeof ProfileRoute
   '/grade-1': typeof Grade1IndexRoute
+  '/grade-3': typeof Grade3IndexRoute
   '/grade-1/$chapterId/$lessonId': typeof Grade1ChapterIdLessonIdRoute
   '/grade-1/$chapterId': typeof Grade1ChapterIdIndexRoute
+  '/grade-3/$semesterId': typeof Grade3SemesterIdIndexRoute
+  '/grade-3/$semesterId/$chapterId/$lessonId': typeof Grade3SemesterIdChapterIdLessonIdRoute
+  '/grade-3/$semesterId/$chapterId': typeof Grade3SemesterIdChapterIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +103,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/profile': typeof ProfileRoute
   '/grade-1/': typeof Grade1IndexRoute
+  '/grade-3/': typeof Grade3IndexRoute
   '/grade-1/$chapterId/$lessonId': typeof Grade1ChapterIdLessonIdRoute
   '/grade-1/$chapterId/': typeof Grade1ChapterIdIndexRoute
+  '/grade-3/$semesterId/': typeof Grade3SemesterIdIndexRoute
+  '/grade-3/$semesterId/$chapterId/$lessonId': typeof Grade3SemesterIdChapterIdLessonIdRoute
+  '/grade-3/$semesterId/$chapterId/': typeof Grade3SemesterIdChapterIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,24 +117,36 @@ export interface FileRouteTypes {
     | '/auth'
     | '/profile'
     | '/grade-1/'
+    | '/grade-3/'
     | '/grade-1/$chapterId/$lessonId'
     | '/grade-1/$chapterId/'
+    | '/grade-3/$semesterId/'
+    | '/grade-3/$semesterId/$chapterId/$lessonId'
+    | '/grade-3/$semesterId/$chapterId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/profile'
     | '/grade-1'
+    | '/grade-3'
     | '/grade-1/$chapterId/$lessonId'
     | '/grade-1/$chapterId'
+    | '/grade-3/$semesterId'
+    | '/grade-3/$semesterId/$chapterId/$lessonId'
+    | '/grade-3/$semesterId/$chapterId'
   id:
     | '__root__'
     | '/'
     | '/auth'
     | '/profile'
     | '/grade-1/'
+    | '/grade-3/'
     | '/grade-1/$chapterId/$lessonId'
     | '/grade-1/$chapterId/'
+    | '/grade-3/$semesterId/'
+    | '/grade-3/$semesterId/$chapterId/$lessonId'
+    | '/grade-3/$semesterId/$chapterId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,8 +154,12 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ProfileRoute: typeof ProfileRoute
   Grade1IndexRoute: typeof Grade1IndexRoute
+  Grade3IndexRoute: typeof Grade3IndexRoute
   Grade1ChapterIdLessonIdRoute: typeof Grade1ChapterIdLessonIdRoute
   Grade1ChapterIdIndexRoute: typeof Grade1ChapterIdIndexRoute
+  Grade3SemesterIdIndexRoute: typeof Grade3SemesterIdIndexRoute
+  Grade3SemesterIdChapterIdLessonIdRoute: typeof Grade3SemesterIdChapterIdLessonIdRoute
+  Grade3SemesterIdChapterIdIndexRoute: typeof Grade3SemesterIdChapterIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -131,11 +185,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grade-3/': {
+      id: '/grade-3/'
+      path: '/grade-3'
+      fullPath: '/grade-3/'
+      preLoaderRoute: typeof Grade3IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/grade-1/': {
       id: '/grade-1/'
       path: '/grade-1'
       fullPath: '/grade-1/'
       preLoaderRoute: typeof Grade1IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grade-3/$semesterId/': {
+      id: '/grade-3/$semesterId/'
+      path: '/grade-3/$semesterId'
+      fullPath: '/grade-3/$semesterId/'
+      preLoaderRoute: typeof Grade3SemesterIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/grade-1/$chapterId/': {
@@ -152,6 +220,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Grade1ChapterIdLessonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grade-3/$semesterId/$chapterId/': {
+      id: '/grade-3/$semesterId/$chapterId/'
+      path: '/grade-3/$semesterId/$chapterId'
+      fullPath: '/grade-3/$semesterId/$chapterId/'
+      preLoaderRoute: typeof Grade3SemesterIdChapterIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grade-3/$semesterId/$chapterId/$lessonId': {
+      id: '/grade-3/$semesterId/$chapterId/$lessonId'
+      path: '/grade-3/$semesterId/$chapterId/$lessonId'
+      fullPath: '/grade-3/$semesterId/$chapterId/$lessonId'
+      preLoaderRoute: typeof Grade3SemesterIdChapterIdLessonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -160,8 +242,13 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ProfileRoute: ProfileRoute,
   Grade1IndexRoute: Grade1IndexRoute,
+  Grade3IndexRoute: Grade3IndexRoute,
   Grade1ChapterIdLessonIdRoute: Grade1ChapterIdLessonIdRoute,
   Grade1ChapterIdIndexRoute: Grade1ChapterIdIndexRoute,
+  Grade3SemesterIdIndexRoute: Grade3SemesterIdIndexRoute,
+  Grade3SemesterIdChapterIdLessonIdRoute:
+    Grade3SemesterIdChapterIdLessonIdRoute,
+  Grade3SemesterIdChapterIdIndexRoute: Grade3SemesterIdChapterIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

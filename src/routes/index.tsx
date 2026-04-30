@@ -38,12 +38,13 @@ const stages = [
   {
     id: "grade-3",
     title: "ثالث ثانوي",
-    subtitle: "قريباً",
-    description: "الفيزياء الحديثة والكم والنسبية",
-    enabled: false,
-    chapters: 6,
-    color: "from-deep to-deep",
+    subtitle: "فصلان دراسيان",
+    description: "الكهرباء، المغناطيسية، الكم، الذرة، والفيزياء النووية",
+    enabled: true,
+    chapters: 18,
+    color: "from-primary via-sky to-primary-glow",
     icon: <Sparkles className="h-10 w-10" />,
+    href: "/grade-3" as const,
   },
 ];
 

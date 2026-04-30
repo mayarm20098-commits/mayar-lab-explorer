@@ -14,6 +14,16 @@ import { FrictionLab } from "./FrictionLab";
 import { InclineLab } from "./InclineLab";
 import { CircularLab } from "./CircularLab";
 import { RelativeVelocityLab } from "./RelativeVelocityLab";
+import { OhmLab } from "./g3s2/OhmLab";
+import { ResistorColorLab } from "./g3s2/ResistorColorLab";
+import { SeriesParallelLab } from "./g3s2/SeriesParallelLab";
+import { MagneticFieldLab } from "./g3s2/MagneticFieldLab";
+import { InductionLab } from "./g3s2/InductionLab";
+import { TransformerLab } from "./g3s2/TransformerLab";
+import { PhotoelectricLab } from "./g3s2/PhotoelectricLab";
+import { BohrLab } from "./g3s2/BohrLab";
+import { SemiconductorLab } from "./g3s2/SemiconductorLab";
+import { HalfLifeLab } from "./g3s2/HalfLifeLab";
 
 type LabMeta = {
   title: string;
@@ -112,5 +122,67 @@ export const labRegistry: Record<string, LabMeta> = {
     goal: "غيّري سرعة القارب والتيار، واكتشفي السرعة الفعلية.",
     conclusion: "السرعة النسبية = حاصل جمع المتجهات.\nمع التيار: v_eff = v + v_t. عكسه: v_eff = v − v_t.",
     Component: RelativeVelocityLab,
+  },
+
+  // ===== ثالث ثانوي - الفصل الدراسي الثاني =====
+  "g3s2-ohm": {
+    title: "قانون أوم والدائرة الكهربائية",
+    goal: "اكتشفي العلاقة بين الجهد V والمقاومة R وشدة التيار I من خلال دائرة تفاعلية.",
+    conclusion: "V = I × R\nزيادة الجهد ترفع التيار، وزيادة المقاومة تخفّضه.\nالقدرة P = V × I.",
+    Component: OhmLab,
+  },
+  "g3s2-resistor-color": {
+    title: "ألوان المقاومات وقراءتها",
+    goal: "تعرّفي على الترميز اللوني للمقاومات (4 حلقات) واحسبي قيمة المقاومة بنفسك.",
+    conclusion: "كل لون يمثل رقماً (0-9). الحلقتان الأوليان أرقام، والثالثة معامل ضرب (10^n)، والرابعة دقّة الصنع.",
+    Component: ResistorColorLab,
+  },
+  "g3s2-series-parallel": {
+    title: "دوائر التوالي والتوازي",
+    goal: "قارني بين توصيل المقاومات على التوالي والتوازي وتأثير ذلك على إضاءة المصابيح.",
+    conclusion: "توالي: R_eq = R1 + R2 (تيار ثابت).\nتوازي: 1/R_eq = 1/R1 + 1/R2 (جهد ثابت).",
+    Component: SeriesParallelLab,
+  },
+  "g3s2-magnetic-field": {
+    title: "المجال المغناطيسي وخطوطه",
+    goal: "اسحبي البوصلات حول مغناطيس واكتشفي اتجاه خطوط المجال من N إلى S.",
+    conclusion: "خطوط المجال تخرج من القطب الشمالي وتدخل القطب الجنوبي.\nاتجاه إبرة البوصلة = اتجاه المجال في تلك النقطة.",
+    Component: MagneticFieldLab,
+  },
+  "g3s2-induction": {
+    title: "الحث الكهرومغناطيسي",
+    goal: "حركي المغناطيس داخل الملف وراقبي توليد القوة الدافعة الكهربائية.",
+    conclusion: "EMF = −N · dΦ/dt (قانون فاراداي).\nاتجاه التيار المستحث يعارض التغيّر (قانون لنز).",
+    Component: InductionLab,
+  },
+  "g3s2-transformer": {
+    title: "المحوّل الكهربائي",
+    goal: "غيّري عدد لفّات الملفّين الابتدائي والثانوي وراقبي تغيّر الجهد الناتج.",
+    conclusion: "Vs/Vp = Ns/Np\nمحوّل رافع: Ns > Np. خافض: Ns < Np.",
+    Component: TransformerLab,
+  },
+  "g3s2-photoelectric": {
+    title: "التأثير الكهروضوئي",
+    goal: "سلّطي ضوءاً بترددات وشدّات مختلفة واكتشفي شرط انبعاث الإلكترونات.",
+    conclusion: "KE = h·f − φ.\nيجب أن تكون h·f > φ للانبعاث.\nزيادة الشدة تزيد عدد الإلكترونات لا طاقتها.",
+    Component: PhotoelectricLab,
+  },
+  "g3s2-bohr": {
+    title: "نموذج بور وأطياف الذرة",
+    goal: "حركي الإلكترون بين مستويات الطاقة وشاهدي الفوتون المنبعث وطول موجته.",
+    conclusion: "E_n = −13.6/n² eV\nانتقال الإلكترون من n عالٍ إلى منخفض ⇒ انبعاث فوتون بطول موجة محدّد.",
+    Component: BohrLab,
+  },
+  "g3s2-semiconductor": {
+    title: "الثنائي وأشباه الموصلات",
+    goal: "اختبري توصيل الثنائي في الانحياز الأمامي والعكسي.",
+    conclusion: "الثنائي يوصّل التيار في اتجاه واحد فقط بعد تجاوز جهد العتبة (~0.7V للسيليكون).",
+    Component: SemiconductorLab,
+  },
+  "g3s2-half-life": {
+    title: "النشاط الإشعاعي وعمر النصف",
+    goal: "حاكِي تحلّل عينة مشعة وارسمي منحنى التحلّل.",
+    conclusion: "N(t) = N₀ · (½)^(t/T½)\nفي كل عمر نصف يتحلل نصف ما تبقى عشوائياً.",
+    Component: HalfLifeLab,
   },
 };
