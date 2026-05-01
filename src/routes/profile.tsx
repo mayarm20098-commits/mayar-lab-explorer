@@ -146,7 +146,10 @@ type StudentRow = {
   avatar_emoji: string;
   total_points: number;
   completed: number;
+  section: number | null;
 };
+
+type SortMode = "completed" | "name";
 
 function TeacherDashboard({ userId }: { userId: string }) {
   const [classroom, setClassroom] = useState<{ id: string; name: string; invite_code: string } | null>(null);
