@@ -27,6 +27,7 @@ function AuthPage() {
   const [displayName, setDisplayName] = useState("");
   const [emoji, setEmoji] = useState(EMOJI_OPTIONS[0]);
   const [inviteCode, setInviteCode] = useState("");
+  const [section, setSection] = useState<number>(1);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
