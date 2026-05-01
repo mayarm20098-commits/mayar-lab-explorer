@@ -167,7 +167,7 @@ function TeacherDashboard({ userId }: { userId: string }) {
         setClassroom(c);
         const { data: profs } = await supabase
           .from("profiles")
-          .select("id, display_name, avatar_emoji, total_points")
+          .select("id, display_name, avatar_emoji, total_points, section")
           .eq("classroom_id", c.id);
         const list = (profs ?? []) as Omit<StudentRow, "completed">[];
         // get completed counts
