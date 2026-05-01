@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { CommentsSection } from "@/components/CommentsSection";
 import { BADGES } from "@/lib/use-lab-progress";
 import { getAllGrade1LabIds } from "@/data/curriculum";
+import { getAllGrade3S2LabIds } from "@/data/curriculum-g3";
 import { Progress } from "@/components/ui/progress";
 import { sounds } from "@/lib/sounds";
 import { toast } from "sonner";
