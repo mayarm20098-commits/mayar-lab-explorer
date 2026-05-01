@@ -13,7 +13,7 @@ export function SiteHeader() {
           </div>
           <div className="text-right">
             <div className="font-display font-extrabold text-foreground leading-none text-base">
-              مختبر مِيار
+              مختبر ميار
             </div>
             <div className="text-[10px] text-muted-foreground leading-none mt-0.5">
               الفيزياء التفاعلية

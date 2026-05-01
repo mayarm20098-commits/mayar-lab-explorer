@@ -7,7 +7,7 @@ import { MiyarAssistant } from "@/components/MiyarAssistant";
 export const Route = createFileRoute("/grade-1/")({
   head: () => ({
     meta: [
-      { title: "أول ثانوي — فصول الفيزياء | مختبر مِيار" },
+      { title: "أول ثانوي — فصول الفيزياء | مختبر ميار" },
       { name: "description", content: "استعرضي فصول مادة الفيزياء 1 لنظام المسارات بأسلوب تفاعلي ممتع." },
     ],
   }),

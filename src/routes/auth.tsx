@@ -8,7 +8,7 @@ import { GraduationCap, BookOpen } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "تسجيل الدخول | مختبر مِيار" },
+      { title: "تسجيل الدخول | مختبر ميار" },
       { name: "description", content: "سجّلي حسابك واحفظي تقدمك في تعلم الفيزياء." },
     ],
   }),
@@ -77,7 +77,7 @@ function AuthPage() {
         <div className="text-center mt-2 mb-6">
           <div className="text-4xl mb-2">⚛️</div>
           <h1 className="text-2xl font-display font-extrabold text-foreground">
-            {mode === "signin" ? "أهلاً بكِ من جديد" : "انضمي إلى مختبر مِيار"}
+            {mode === "signin" ? "أهلاً بكِ من جديد" : "انضمي إلى مختبر ميار"}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
             {mode === "signin" ? "سجّلي الدخول لمتابعة تقدمكِ" : "أنشئي حسابكِ وابدئي رحلة الفيزياء"}
