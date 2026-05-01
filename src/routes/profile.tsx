@@ -15,7 +15,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "ملفكِ | مختبر مِيار" },
+      { title: "ملفكِ | مختبر ميار" },
       { name: "description", content: "تقدمكِ في الفيزياء، نقاطكِ، وشاراتكِ." },
     ],
   }),

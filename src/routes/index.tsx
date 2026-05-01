@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "مختبر مِيار الفيزيائي الذكي — اختاري مرحلتك" },
+      { title: "مختبر ميار الفيزيائي الذكي — اختاري مرحلتك" },
       { name: "description", content: "تعلّمي الفيزياء بأسلوب تفاعلي ممتع. اختاري مرحلتك الدراسية وابدئي رحلة الاكتشاف." },
     ],
   }),
@@ -66,7 +66,7 @@ function HomePage() {
           </div>
           <div className="text-right">
             <div className="font-display font-extrabold text-foreground text-lg leading-none">
-              مختبر مِيار
+              مختبر ميار
             </div>
             <div className="text-xs text-muted-foreground mt-0.5">الفيزياء التفاعلية الذكية</div>
           </div>

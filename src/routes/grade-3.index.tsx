@@ -8,7 +8,7 @@ import { sounds } from "@/lib/sounds";
 export const Route = createFileRoute("/grade-3/")({
   head: () => ({
     meta: [
-      { title: "ثالث ثانوي — اختاري الفصل الدراسي | مختبر مِيار" },
+      { title: "ثالث ثانوي — اختاري الفصل الدراسي | مختبر ميار" },
       { name: "description", content: "اختاري الفصل الدراسي الأول أو الثاني لمنهج فيزياء ثالث ثانوي." },
     ],
   }),

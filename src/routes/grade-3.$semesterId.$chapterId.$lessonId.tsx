@@ -22,7 +22,7 @@ export const Route = createFileRoute("/grade-3/$semesterId/$chapterId/$lessonId"
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.lesson.title ?? "درس"} | مختبر مِيار` },
+      { title: `${loaderData?.lesson.title ?? "درس"} | مختبر ميار` },
       { name: "description", content: loaderData?.lesson.summary ?? "درس الفيزياء" },
     ],
   }),
