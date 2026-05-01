@@ -131,6 +131,7 @@ export type Database = {
           id: string
           role: Database["public"]["Enums"]["app_role"] | null
           scientist_name: string
+          section: number | null
           total_points: number
           updated_at: string
         }
@@ -142,6 +143,7 @@ export type Database = {
           id: string
           role?: Database["public"]["Enums"]["app_role"] | null
           scientist_name?: string
+          section?: number | null
           total_points?: number
           updated_at?: string
         }
@@ -153,6 +155,7 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"] | null
           scientist_name?: string
+          section?: number | null
           total_points?: number
           updated_at?: string
         }

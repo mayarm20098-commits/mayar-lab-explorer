@@ -12,6 +12,7 @@ type Profile = {
   total_points: number;
   classroom_id: string | null;
   role: AppRole | null;
+  section?: number | null;
 };
 
 type SignUpArgs = {
@@ -21,6 +22,7 @@ type SignUpArgs = {
   avatarEmoji: string;
   role: AppRole;
   inviteCode?: string;
+  section?: number;
 };
 
 type AuthCtx = {
@@ -92,6 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           avatar_emoji: args.avatarEmoji,
           role: args.role,
           invite_code: code,
+          section: args.role === "student" && args.section ? String(args.section) : "",
         },
       },
     });

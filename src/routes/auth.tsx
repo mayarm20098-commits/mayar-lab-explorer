@@ -27,6 +27,7 @@ function AuthPage() {
   const [displayName, setDisplayName] = useState("");
   const [emoji, setEmoji] = useState(EMOJI_OPTIONS[0]);
   const [inviteCode, setInviteCode] = useState("");
+  const [section, setSection] = useState<number>(1);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ function AuthPage() {
         avatarEmoji: emoji,
         role,
         inviteCode: role === "student" ? inviteCode : undefined,
+        section: role === "student" ? section : undefined,
       });
       if (error) toast.error(error);
       else {
@@ -154,6 +156,24 @@ function AuthPage() {
                     placeholder="ABC123"
                     className="w-full rounded-xl border-2 border-border bg-background p-2.5 font-mono tracking-widest text-center"
                   />
+                </div>
+              )}
+
+              {role === "student" && (
+                <div>
+                  <label className="text-sm font-bold text-foreground block mb-1.5">الفصل</label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[1, 2, 3, 4].map((n) => (
+                      <button
+                        type="button"
+                        key={n}
+                        onClick={() => { sounds.pop(); setSection(n); }}
+                        className={`rounded-xl border-2 p-2.5 text-sm font-bold transition-all ${section === n ? "border-primary bg-primary/10 scale-105" : "border-border bg-card"}`}
+                      >
+                        فصل {n}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
             </>
