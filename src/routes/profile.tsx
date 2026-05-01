@@ -216,7 +216,7 @@ function TeacherDashboard({ userId }: { userId: string }) {
         </p>
       </div>
 
-      {/* Students list */}
+      {/* Students grouped by section */}
       <div className="rounded-3xl bg-card border border-border p-5 shadow-card">
         <h2 className="text-lg font-display font-extrabold text-foreground flex items-center gap-2 mb-1">
           <Users className="h-5 w-5 text-primary" /> طالباتكِ ({students.length})
@@ -229,38 +229,91 @@ function TeacherDashboard({ userId }: { userId: string }) {
             لم تنضم أي طالبة بعد. شاركي الكود معهن!
           </p>
         ) : (
-          <div className="space-y-3">
-            {students
-              .sort((a, b) => b.completed - a.completed || b.total_points - a.total_points)
-              .map((s, i) => {
-                const totalLabs = getAllGrade1LabIds().length + getAllG3S2LabIds().length;
-                const pct = totalLabs > 0 ? Math.round((s.completed / totalLabs) * 100) : 0;
-                return (
-                  <div key={s.id} className="bg-muted/30 rounded-2xl p-3">
-                    <div className="flex items-center gap-3">
-                      <div className="text-3xl">{s.avatar_emoji}</div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <div className="font-bold text-foreground truncate">العالِمة {s.display_name}</div>
-                          {i === 0 && s.completed > 0 && <Trophy className="h-4 w-4 text-amber-500 shrink-0" />}
-                        </div>
-                        <div className="text-xs text-muted-foreground mt-0.5">
-                          أكملت <span className="font-bold text-primary">{s.completed}</span> من {totalLabs} تجربة
-                        </div>
-                      </div>
-                      <div className="text-center shrink-0">
-                        <div className="text-lg font-extrabold text-primary">{s.total_points}</div>
-                        <div className="text-[10px] text-muted-foreground">نقطة</div>
-                      </div>
-                    </div>
-                    <div className="mt-2">
-                      <Progress value={pct} className="h-2" />
-                    </div>
-                  </div>
-                );
-              })}
+          <div className="space-y-6">
+            {[1, 2, 3, 4].map((sec) => {
+              const inSection = students.filter((s) => (s.section ?? 0) === sec);
+              if (inSection.length === 0) return null;
+              return <SectionGroup key={sec} section={sec} students={inSection} />;
+            })}
+            {(() => {
+              const unassigned = students.filter((s) => !s.section || ![1,2,3,4].includes(s.section));
+              if (unassigned.length === 0) return null;
+              return <SectionGroup key={0} section={0} students={unassigned} />;
+            })()}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function SectionGroup({ section, students }: { section: number; students: StudentRow[] }) {
+  const [sortMode, setSortMode] = useState<SortMode>("completed");
+  const totalLabs = getAllGrade1LabIds().length + getAllG3S2LabIds().length;
+
+  const sorted = [...students].sort((a, b) => {
+    if (sortMode === "name") {
+      return a.display_name.localeCompare(b.display_name, "ar");
+    }
+    return b.completed - a.completed || b.total_points - a.total_points;
+  });
+
+  const title = section === 0 ? "بدون فصل محدد" : `الفصل ${section}`;
+
+  return (
+    <div className="border border-border/60 rounded-2xl p-4 bg-background/40">
+      <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <div className="flex items-center gap-2">
+          <span className="bg-primary/10 text-primary font-bold rounded-full px-3 py-1 text-sm">
+            {title}
+          </span>
+          <span className="text-xs text-muted-foreground">{students.length} طالبة</span>
+        </div>
+        <div className="inline-flex items-center bg-muted rounded-full p-1 text-xs font-bold">
+          <button
+            type="button"
+            onClick={() => { sounds.pop(); setSortMode("completed"); }}
+            className={`px-3 py-1.5 rounded-full transition-all ${sortMode === "completed" ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground"}`}
+          >
+            حسب التجارب
+          </button>
+          <button
+            type="button"
+            onClick={() => { sounds.pop(); setSortMode("name"); }}
+            className={`px-3 py-1.5 rounded-full transition-all ${sortMode === "name" ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground"}`}
+          >
+            أبجدي
+          </button>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {sorted.map((s, i) => {
+          const pct = totalLabs > 0 ? Math.round((s.completed / totalLabs) * 100) : 0;
+          const isTop = sortMode === "completed" && i === 0 && s.completed > 0;
+          return (
+            <div key={s.id} className="bg-muted/30 rounded-2xl p-3">
+              <div className="flex items-center gap-3">
+                <div className="text-3xl">{s.avatar_emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="font-bold text-foreground truncate">العالِمة {s.display_name}</div>
+                    {isTop && <Trophy className="h-4 w-4 text-amber-500 shrink-0" />}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-0.5">
+                    أكملت <span className="font-bold text-primary">{s.completed}</span> من {totalLabs} تجربة
+                  </div>
+                </div>
+                <div className="text-center shrink-0">
+                  <div className="text-lg font-extrabold text-primary">{s.total_points}</div>
+                  <div className="text-[10px] text-muted-foreground">نقطة</div>
+                </div>
+              </div>
+              <div className="mt-2">
+                <Progress value={pct} className="h-2" />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
