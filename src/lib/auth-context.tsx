@@ -94,6 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           avatar_emoji: args.avatarEmoji,
           role: args.role,
           invite_code: code,
+          section: args.role === "student" && args.section ? String(args.section) : "",
         },
       },
     });
