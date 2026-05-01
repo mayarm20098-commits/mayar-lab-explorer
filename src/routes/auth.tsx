@@ -158,6 +158,24 @@ function AuthPage() {
                   />
                 </div>
               )}
+
+              {role === "student" && (
+                <div>
+                  <label className="text-sm font-bold text-foreground block mb-1.5">الفصل</label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[1, 2, 3, 4].map((n) => (
+                      <button
+                        type="button"
+                        key={n}
+                        onClick={() => { sounds.pop(); setSection(n); }}
+                        className={`rounded-xl border-2 p-2.5 text-sm font-bold transition-all ${section === n ? "border-primary bg-primary/10 scale-105" : "border-border bg-card"}`}
+                      >
+                        فصل {n}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           )}
 
