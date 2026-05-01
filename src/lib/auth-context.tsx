@@ -70,22 +70,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const redirect = typeof window !== "undefined" ? window.location.origin : undefined;
     const scientistName = `العالِمة ${args.displayName}`;
 
-    // Validate invite code BEFORE creating account (so we can return a clear error)
-    if (args.role === "student" && args.inviteCode && args.inviteCode.trim()) {
-      const code = args.inviteCode.trim().toUpperCase();
-      const { data: classroom } = await supabase
-        .from("classrooms")
-        .select("id")
-        .eq("invite_code", code)
-        .maybeSingle();
-      if (!classroom?.id) {
+    const code = args.role === "student" ? (args.inviteCode?.trim().toUpperCase() ?? "") : "";
+
+    // Validate invite code BEFORE creating account via SECURITY DEFINER RPC (works for anon)
+    if (args.role === "student" && code) {
+      const { data: isValid, error: vErr } = await supabase.rpc("validate_invite_code", { _code: code });
+      if (vErr) return { error: "تعذّر التحقق من الكود. حاولي مرة أخرى." };
+      if (!isValid) {
         return { error: "كود المعلمة غير صحيح. تأكدي من الكود وحاولي مرة أخرى." };
       }
     }
 
-    // All role/classroom logic happens server-side in the handle_new_user trigger
-    // via raw_user_meta_data — this works even when email confirmation is required.
-    const { error } = await supabase.auth.signUp({
+    const { data: signUpData, error } = await supabase.auth.signUp({
       email: args.email,
       password: args.password,
       options: {
@@ -95,11 +91,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           scientist_name: scientistName,
           avatar_emoji: args.avatarEmoji,
           role: args.role,
-          invite_code: args.role === "student" ? (args.inviteCode?.trim().toUpperCase() ?? "") : "",
+          invite_code: code,
         },
       },
     });
-    if (error) return { error: error.message };
+    if (error) {
+      if (error.message.includes("INVALID_INVITE_CODE")) {
+        return { error: "كود المعلمة غير صحيح." };
+      }
+      return { error: error.message };
+    }
+
+    // If a session was created immediately (auto-confirm on), verify the link succeeded.
+    // If for some reason classroom_id is still null, retry the join via RPC.
+    if (args.role === "student" && code && signUpData.session?.user?.id) {
+      const uid = signUpData.session.user.id;
+      const { data: prof } = await supabase.from("profiles").select("classroom_id").eq("id", uid).maybeSingle();
+      if (!prof?.classroom_id) {
+        const { error: joinErr } = await supabase.rpc("join_classroom_by_code", { _code: code });
+        if (joinErr) return { error: "تم إنشاء الحساب لكن تعذّر الربط بالمعلمة. جرّبي من صفحة الملف الشخصي." };
+      }
+    }
+
     return { error: null };
   }
 

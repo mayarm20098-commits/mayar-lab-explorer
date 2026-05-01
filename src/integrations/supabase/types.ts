@@ -200,6 +200,8 @@ export type Database = {
         }
         Returns: boolean
       }
+      join_classroom_by_code: { Args: { _code: string }; Returns: string }
+      validate_invite_code: { Args: { _code: string }; Returns: boolean }
     }
     Enums: {
       app_role: "teacher" | "student"
