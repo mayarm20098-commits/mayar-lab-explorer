@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { CommentsSection } from "@/components/CommentsSection";
 import { BADGES } from "@/lib/use-lab-progress";
 import { getAllGrade1LabIds } from "@/data/curriculum";
+import { getAllG3S2LabIds } from "@/data/curriculum-g3";
 import { Progress } from "@/components/ui/progress";
 import { sounds } from "@/lib/sounds";
 import { toast } from "sonner";
@@ -214,33 +215,47 @@ function TeacherDashboard({ userId }: { userId: string }) {
 
       {/* Students list */}
       <div className="rounded-3xl bg-card border border-border p-5 shadow-card">
-        <h2 className="text-lg font-display font-extrabold text-foreground flex items-center gap-2 mb-4">
+        <h2 className="text-lg font-display font-extrabold text-foreground flex items-center gap-2 mb-1">
           <Users className="h-5 w-5 text-primary" /> طالباتكِ ({students.length})
         </h2>
+        <p className="text-xs text-muted-foreground mb-4">
+          إجمالي التجارب المتاحة: {getAllGrade1LabIds().length + getAllG3S2LabIds().length} تجربة
+        </p>
         {students.length === 0 ? (
           <p className="text-sm text-muted-foreground text-center py-8">
             لم تنضم أي طالبة بعد. شاركي الكود معهن!
           </p>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {students
-              .sort((a, b) => b.total_points - a.total_points)
-              .map((s, i) => (
-                <div key={s.id} className="flex items-center gap-3 bg-muted/30 rounded-2xl p-3">
-                  <div className="text-2xl">{s.avatar_emoji}</div>
-                  <div className="flex-1">
-                    <div className="font-bold text-foreground">العالِمة {s.display_name}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {s.completed} تجربة مكتملة
+              .sort((a, b) => b.completed - a.completed || b.total_points - a.total_points)
+              .map((s, i) => {
+                const totalLabs = getAllGrade1LabIds().length + getAllG3S2LabIds().length;
+                const pct = totalLabs > 0 ? Math.round((s.completed / totalLabs) * 100) : 0;
+                return (
+                  <div key={s.id} className="bg-muted/30 rounded-2xl p-3">
+                    <div className="flex items-center gap-3">
+                      <div className="text-3xl">{s.avatar_emoji}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <div className="font-bold text-foreground truncate">العالِمة {s.display_name}</div>
+                          {i === 0 && s.completed > 0 && <Trophy className="h-4 w-4 text-amber-500 shrink-0" />}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-0.5">
+                          أكملت <span className="font-bold text-primary">{s.completed}</span> من {totalLabs} تجربة
+                        </div>
+                      </div>
+                      <div className="text-center shrink-0">
+                        <div className="text-lg font-extrabold text-primary">{s.total_points}</div>
+                        <div className="text-[10px] text-muted-foreground">نقطة</div>
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      <Progress value={pct} className="h-2" />
                     </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-lg font-extrabold text-primary">{s.total_points}</div>
-                    <div className="text-[10px] text-muted-foreground">نقطة</div>
-                  </div>
-                  {i === 0 && s.total_points > 0 && <Trophy className="h-5 w-5 text-amber-500" />}
-                </div>
-              ))}
+                );
+              })}
           </div>
         )}
       </div>
