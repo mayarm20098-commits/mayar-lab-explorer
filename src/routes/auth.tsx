@@ -59,6 +59,7 @@ function AuthPage() {
         avatarEmoji: emoji,
         role,
         inviteCode: role === "student" ? inviteCode : undefined,
+        section: role === "student" ? section : undefined,
       });
       if (error) toast.error(error);
       else {
