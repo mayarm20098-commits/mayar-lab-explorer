@@ -12,6 +12,7 @@ type Profile = {
   total_points: number;
   classroom_id: string | null;
   role: AppRole | null;
+  section?: number | null;
 };
 
 type SignUpArgs = {
@@ -21,6 +22,7 @@ type SignUpArgs = {
   avatarEmoji: string;
   role: AppRole;
   inviteCode?: string;
+  section?: number;
 };
 
 type AuthCtx = {
