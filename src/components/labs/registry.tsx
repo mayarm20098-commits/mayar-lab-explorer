@@ -24,6 +24,13 @@ import { PhotoelectricLab } from "./g3s2/PhotoelectricLab";
 import { BohrLab } from "./g3s2/BohrLab";
 import { SemiconductorLab } from "./g3s2/SemiconductorLab";
 import { HalfLifeLab } from "./g3s2/HalfLifeLab";
+import { PressureLab } from "./g2/PressureLab";
+import { BuoyancyLab } from "./g2/BuoyancyLab";
+import { GasLawLab } from "./g2/GasLawLab";
+import { PendulumLab } from "./g2/PendulumLab";
+import { WaveLab } from "./g2/WaveLab";
+import { DopplerLab } from "./g2/DopplerLab";
+import { ReflectionLab } from "./g2/ReflectionLab";
 
 type LabMeta = {
   title: string;
@@ -184,5 +191,49 @@ export const labRegistry: Record<string, LabMeta> = {
     goal: "حاكِي تحلّل عينة مشعة وارسمي منحنى التحلّل.",
     conclusion: "N(t) = N₀ · (½)^(t/T½)\nفي كل عمر نصف يتحلل نصف ما تبقى عشوائياً.",
     Component: HalfLifeLab,
+  },
+
+  // ===== ثاني ثانوي =====
+  "g2s1-pressure": {
+    title: "الضغط في السوائل",
+    goal: "اكتشفي تأثير العمق وكثافة السائل على الضغط الذي يتعرض له الغوّاص.",
+    conclusion: "P = ρ · g · h\nالضغط يزداد طردياً مع العمق وكثافة السائل، ولا يعتمد على شكل الإناء.",
+    Component: PressureLab,
+  },
+  "g2s1-buoyancy": {
+    title: "قوة الطفو ومبدأ أرخميدس",
+    goal: "غيّري كثافة الجسم وحجمه واكتشفي متى يطفو ومتى يغرق.",
+    conclusion: "F_b = ρ_سائل · V_غمر · g\nيطفو الجسم إذا كانت كثافته أقل من كثافة السائل.",
+    Component: BuoyancyLab,
+  },
+  "g2s1-gas-law": {
+    title: "قانون الغاز المثالي",
+    goal: "غيّري الحجم ودرجة الحرارة وراقبي تغيّر الضغط وحركة الجزيئات.",
+    conclusion: "PV = nRT\nالضغط يزيد مع الحرارة ويقل مع زيادة الحجم.",
+    Component: GasLawLab,
+  },
+  "g2s1-pendulum": {
+    title: "البندول البسيط",
+    goal: "اكتشفي العوامل المؤثرة في الزمن الدوري للبندول.",
+    conclusion: "T = 2π · √(L / g)\nالزمن الدوري يعتمد فقط على الطول والجاذبية، لا على الكتلة ولا السعة (لزوايا صغيرة).",
+    Component: PendulumLab,
+  },
+  "g2s2-wave": {
+    title: "خصائص الموجات",
+    goal: "تحكّمي بالسعة والتردد والطول الموجي وحلّلي العلاقة بينها.",
+    conclusion: "v = f · λ\nالسعة تحدّد الطاقة، أمّا التردد والطول الموجي فيحدّدان السرعة.",
+    Component: WaveLab,
+  },
+  "g2s2-doppler": {
+    title: "تأثير دوبلر",
+    goal: "حرّكي مصدر الصوت نحو المراقبة أو بعيداً عنها وراقبي تغيّر التردد.",
+    conclusion: "f' = f₀ · c / (c − v_s)\nاقتراب المصدر يرفع التردد المسموع، وابتعاده يخفّضه.",
+    Component: DopplerLab,
+  },
+  "g2s2-reflection": {
+    title: "انعكاس الضوء",
+    goal: "غيّري زاوية شعاع الليزر على المرآة وتحقّقي من قانون الانعكاس.",
+    conclusion: "θᵢ = θᵣ\nالشعاع الساقط والمنعكس والعمودي يقعون في مستوى واحد.",
+    Component: ReflectionLab,
   },
 };
