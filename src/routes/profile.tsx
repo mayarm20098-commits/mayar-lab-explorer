@@ -8,6 +8,7 @@ import { CommentsSection } from "@/components/CommentsSection";
 import { BADGES } from "@/lib/use-lab-progress";
 import { getAllGrade1LabIds } from "@/data/curriculum";
 import { getAllG3S2LabIds } from "@/data/curriculum-g3";
+import { getAllG2LabIds } from "@/data/curriculum-g2";
 import { Progress } from "@/components/ui/progress";
 import { sounds } from "@/lib/sounds";
 import { toast } from "sonner";
