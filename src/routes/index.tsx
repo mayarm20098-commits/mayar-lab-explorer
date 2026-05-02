@@ -28,12 +28,13 @@ const stages = [
   {
     id: "grade-2",
     title: "ثاني ثانوي",
-    subtitle: "قريباً",
-    description: "تجارب الكهرباء والمغناطيسية بانتظارك",
-    enabled: false,
+    subtitle: "فصلان دراسيان",
+    description: "الموائع، الديناميكا الحرارية، الموجات، الصوت والضوء",
+    enabled: true,
     chapters: 6,
-    color: "from-deep to-deep",
+    color: "from-primary-glow via-primary to-deep",
     icon: <FlaskConical className="h-10 w-10" />,
+    href: "/grade-2" as const,
   },
   {
     id: "grade-3",

@@ -8,6 +8,7 @@ import { CommentsSection } from "@/components/CommentsSection";
 import { BADGES } from "@/lib/use-lab-progress";
 import { getAllGrade1LabIds } from "@/data/curriculum";
 import { getAllG3S2LabIds } from "@/data/curriculum-g3";
+import { getAllG2LabIds } from "@/data/curriculum-g2";
 import { Progress } from "@/components/ui/progress";
 import { sounds } from "@/lib/sounds";
 import { toast } from "sonner";
@@ -47,7 +48,7 @@ function ProfilePage() {
   }
 
   const completedCount = progress.filter((p) => p.completed).length;
-  const totalLabs = getAllGrade1LabIds().length + getAllG3S2LabIds().length;
+  const totalLabs = getAllGrade1LabIds().length + getAllG2LabIds().length + getAllG3S2LabIds().length;
   const totalCorrect = progress.reduce((s, p) => s + p.quiz_score, 0);
   const totalQs = progress.reduce((s, p) => s + p.quiz_total, 0);
   const accuracy = totalQs > 0 ? Math.round((totalCorrect / totalQs) * 100) : 0;
@@ -222,7 +223,7 @@ function TeacherDashboard({ userId }: { userId: string }) {
           <Users className="h-5 w-5 text-primary" /> طالباتكِ ({students.length})
         </h2>
         <p className="text-xs text-muted-foreground mb-4">
-          إجمالي التجارب المتاحة: {getAllGrade1LabIds().length + getAllG3S2LabIds().length} تجربة
+          إجمالي التجارب المتاحة: {getAllGrade1LabIds().length + getAllG2LabIds().length + getAllG3S2LabIds().length} تجربة
         </p>
         {students.length === 0 ? (
           <p className="text-sm text-muted-foreground text-center py-8">
@@ -249,7 +250,7 @@ function TeacherDashboard({ userId }: { userId: string }) {
 
 function SectionGroup({ section, students }: { section: number; students: StudentRow[] }) {
   const [sortMode, setSortMode] = useState<SortMode>("completed");
-  const totalLabs = getAllGrade1LabIds().length + getAllG3S2LabIds().length;
+  const totalLabs = getAllGrade1LabIds().length + getAllG2LabIds().length + getAllG3S2LabIds().length;
 
   const sorted = [...students].sort((a, b) => {
     if (sortMode === "name") {
