@@ -64,7 +64,7 @@ function AuthPage() {
       if (error) toast.error(error);
       else {
         sounds.celebrate();
-        toast.success("تم إنشاء حسابكِ! تحقّقي من بريدك لتفعيله.");
+        toast.success("تم إنشاء حسابكِ بنجاح!");
       }
     }
     setLoading(false);
