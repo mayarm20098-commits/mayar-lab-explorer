@@ -36,8 +36,7 @@ export const grade1Chapters: Chapter[] = [
     lessons: [
       { id: "2-1", title: "تصوير الحركة", lab: "motion-diagram", summary: "مخططات حركة بفترات زمنية متساوية" },
       { id: "2-2", title: "الموقع والزمن", lab: "position-time", summary: "بناء منحنى الموقع/الزمن" },
-      { id: "2-3", title: "منحنى السرعة/الزمن", lab: "velocity", summary: "قراءة منحنى السرعة وتحليل المساحة تحته" },
-      { id: "2-4", title: "السرعة", lab: "velocity", summary: "السرعة المتوسطة واللحظية" },
+      { id: "2-3", title: "السرعة المتوسطة واللحظية", lab: "velocity", summary: "تحليل السرعة المتوسطة واللحظية ومنحنى السرعة/الزمن" },
     ],
   },
   {
@@ -47,9 +46,8 @@ export const grade1Chapters: Chapter[] = [
     description: "التسارع، الحركة بتسارع ثابت، السقوط الحر",
     emoji: "🚀",
     lessons: [
-      { id: "3-1", title: "التسارع", lab: "acceleration", summary: "محاكاة سيارة متسارعة وتغير السرعة" },
-      { id: "3-2", title: "الحركة بتسارع ثابت", lab: "acceleration", summary: "معادلات الحركة الأساسية" },
-      { id: "3-3", title: "السقوط الحر", lab: "free-fall", summary: "تجربة محاكاة السقوط تحت تأثير الجاذبية" },
+      { id: "3-1", title: "التسارع والحركة بتسارع ثابت", lab: "acceleration", summary: "غيّري التسارع وراقبي تغيّر السرعة والموقع مع الزمن" },
+      { id: "3-2", title: "السقوط الحر", lab: "free-fall", summary: "تجربة محاكاة السقوط تحت تأثير الجاذبية" },
     ],
   },
   {
@@ -59,9 +57,8 @@ export const grade1Chapters: Chapter[] = [
     description: "القوة والحركة، قوانين نيوتن، التأثر المتبادل",
     emoji: "⚖️",
     lessons: [
-      { id: "4-1", title: "القوة والحركة", lab: "newton-second", summary: "قانون نيوتن الثاني: F = ma" },
-      { id: "4-2", title: "قوانين نيوتن", lab: "newton-second", summary: "تطبيق القوانين الثلاثة" },
-      { id: "4-3", title: "قوى التأثر المتبادل", lab: "action-reaction", summary: "محاكاة الفعل ورد الفعل" },
+      { id: "4-1", title: "قوانين نيوتن (F = ma)", lab: "newton-second", summary: "غيّري القوة والكتلة وراقبي التسارع" },
+      { id: "4-2", title: "قوى التأثر المتبادل", lab: "action-reaction", summary: "محاكاة الفعل ورد الفعل" },
     ],
   },
   {
