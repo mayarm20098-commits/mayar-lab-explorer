@@ -47,7 +47,7 @@ function ProfilePage() {
   }
 
   const completedCount = progress.filter((p) => p.completed).length;
-  const totalLabs = getAllGrade1LabIds().length;
+  const totalLabs = getAllGrade1LabIds().length + getAllG3S2LabIds().length;
   const totalCorrect = progress.reduce((s, p) => s + p.quiz_score, 0);
   const totalQs = progress.reduce((s, p) => s + p.quiz_total, 0);
   const accuracy = totalQs > 0 ? Math.round((totalCorrect / totalQs) * 100) : 0;
