@@ -2,9 +2,11 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, BookOpenText } from "lucide-react";
 import { findG2Lesson, grade2Semesters } from "@/data/curriculum-g2";
+import { quizzes } from "@/data/quizzes";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MiyarAssistant, type MiyarMessage } from "@/components/MiyarAssistant";
 import { LabFrame } from "@/components/LabFrame";
+import { QuizSection } from "@/components/QuizSection";
 import { CompletionPanel } from "@/components/CompletionPanel";
 import { labRegistry } from "@/components/labs/registry";
 import { useLabProgress } from "@/lib/use-lab-progress";
@@ -43,10 +45,14 @@ function LessonPage() {
       : `سنتعلم اليوم درس "${lesson.title}". هيا نبدأ!`,
     mood: "happy",
   });
+  const [quizScore, setQuizScore] = useState(0);
+  const [quizMistakes, setQuizMistakes] = useState(0);
+  const [quizTotal, setQuizTotal] = useState(0);
 
   const sayMiyar = (text: string, mood?: MiyarMessage["mood"]) => setMiyarMsg({ text, mood });
 
   const meta = labKey ? labRegistry[labKey] : null;
+  const labQuiz = labKey ? quizzes[labKey] ?? [] : [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -75,14 +81,26 @@ function LessonPage() {
               <meta.Component onMiyarSay={sayMiyar} />
             </LabFrame>
 
+            {labQuiz.length > 0 && (
+              <QuizSection
+                questions={labQuiz}
+                onResult={(score, mistakes, total) => {
+                  setQuizScore(score);
+                  setQuizMistakes(mistakes);
+                  setQuizTotal(total);
+                }}
+                onMiyarSay={(t, m) => sayMiyar(t, m)}
+              />
+            )}
+
             <CompletionPanel
               labId={labId}
-              quizScore={0}
-              quizTotal={0}
-              mistakes={0}
+              quizScore={quizScore}
+              quizTotal={quizTotal || labQuiz.length}
+              mistakes={quizMistakes}
               completed={progress?.completed ?? false}
               pointsEarned={progress?.points_earned ?? 0}
-              onComplete={() => saveResult(0, 0, 0)}
+              onComplete={() => saveResult(quizScore, quizTotal || labQuiz.length, quizMistakes)}
             />
           </div>
         ) : (

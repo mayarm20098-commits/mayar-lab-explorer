@@ -377,4 +377,42 @@ export const quizzes: Record<string, QuizQuestion[]> = {
     { question: "بعد 3 أعمار نصف يتبقى من العينة:", options: ["1/2", "1/4", "1/8", "1/16"], correctIndex: 2, explanation: "(½)³ = 1/8." },
     { question: "التحلل الإشعاعي عملية:", options: ["حتمية بدقة", "عشوائية إحصائية", "كهربائية فقط", "حرارية"], correctIndex: 1, explanation: "كل نواة منفردة تتحلل عشوائياً، لكن المجموع يتبع قانون أُسّي." },
   ],
+
+  // ===== ثاني ثانوي =====
+  "g2-gravity": [
+    { question: "ينص قانون نيوتن للجاذبية على أن قوة الجاذبية بين جسمين:", options: ["تتناسب طردياً مع المسافة", "تتناسب عكسياً مع مربع المسافة", "ثابتة لا تعتمد على المسافة", "تتناسب طردياً مع مربع المسافة"], correctIndex: 1, explanation: "F = G·m₁·m₂/r² — القوة عكسية مع r²." },
+    { question: "وجد كبلر أن مدارات الكواكب:", options: ["دائرية تماماً", "إهليلجية والشمس في إحدى البؤرتين", "مربعة", "خطية"], correctIndex: 1, explanation: "قانون كبلر الأول: المدارات إهليلجية والشمس في إحدى بؤرتي القطع." },
+    { question: "إذا كانت كتلتا جسمين 8 و6 كغ والمسافة بينهما 2م، فقوة الجاذبية بينهما:", options: ["8.0×10⁻¹⁰ N", "8.0×10⁻⁵ N", "صفر", "12 N"], correctIndex: 0, explanation: "F = (6.67×10⁻¹¹ × 48)/4 ≈ 8.0×10⁻¹⁰ N." },
+    { question: "ينص مبدأ التكافؤ على:", options: ["الكتلة لا تساوي الوزن", "كتلة القصور = كتلة الجاذبية", "g يختلف بين الكواكب", "الوزن ثابت"], correctIndex: 1, explanation: "كتلة القصور وكتلة الجاذبية متساويتان مقداراً." },
+  ],
+  "g2-rotation": [
+    { question: "العزم τ يساوي:", options: ["F + r", "F · r", "F / r", "F · r²"], correctIndex: 1, explanation: "τ = r × F — حاصل ضرب القوة في ذراع الدوران." },
+    { question: "وحدة الإزاحة الزاوية هي:", options: ["متر", "راديان", "ثانية", "نيوتن"], correctIndex: 1, explanation: "الإزاحة الزاوية تقاس بالراديان (rad)." },
+    { question: "إذا دار جسم بسرعة زاوية ثابتة 10 rad/s فإن تسارعه الزاوي:", options: ["10 rad/s²", "صفر", "100 rad/s²", "1 rad/s²"], correctIndex: 1, explanation: "السرعة ثابتة ⇒ لا تسارع." },
+    { question: "حتى يكون الجسم في اتزان ميكانيكي يجب توفر:", options: ["اتزان انتقالي فقط", "اتزان دوراني فقط", "اتزان انتقالي ودوراني معاً", "حركة مستمرة"], correctIndex: 2, explanation: "يجب أن يتحقق الشرطان معاً." },
+  ],
+  "g2-momentum": [
+    { question: "الزخم p يساوي:", options: ["m + v", "m · v", "½ m v²", "m / v"], correctIndex: 1, explanation: "p = m·v ووحدته kg·m/s." },
+    { question: "نظرية الدفع-الزخم تنص على أن:", options: ["F·Δt = ΔP", "F = m·a فقط", "P = ½mv²", "P ثابت دائماً"], correctIndex: 0, explanation: "الدفع المؤثر = التغير في الزخم." },
+    { question: "سيارة كتلتها 700 كغ بسرعة 115 م/ث، زخمها:", options: ["80500 kg·m/s", "8050 kg·m/s", "615 kg·m/s", "805 kg·m/s"], correctIndex: 0, explanation: "P = 700×115 = 80500 kg·m/s." },
+    { question: "في النظام المعزول الزخم الكلي:", options: ["يزداد", "ينقص", "محفوظ", "يساوي صفر دائماً"], correctIndex: 2, explanation: "الزخم محفوظ في غياب القوى الخارجية." },
+  ],
+  "g2-machines": [
+    { question: "الفائدة الميكانيكية المثالية IMA تساوي:", options: ["F_r/F_e", "d_e/d_r", "MA × IMA", "F·d"], correctIndex: 1, explanation: "IMA = نسبة مسافة الجهد إلى مسافة الحمل." },
+    { question: "كفاءة الآلة تساوي:", options: ["MA + IMA", "(MA/IMA) × 100", "IMA - MA", "F_e × d_e"], correctIndex: 1, explanation: "الكفاءة = (الفائدة الفعلية / المثالية) × 100%." },
+    { question: "إذا كان MA = 2.5 و IMA = 6 فالكفاءة:", options: ["41.66%", "60%", "150%", "100%"], correctIndex: 0, explanation: "(2.5/6)×100 ≈ 41.66%." },
+    { question: "أي مما يلي آلة بسيطة؟", options: ["الدراجة", "السيارة", "البرغي", "الحاسوب"], correctIndex: 2, explanation: "البرغي والرافعة والإسفين أمثلة للآلات البسيطة." },
+  ],
+  "g2-energy": [
+    { question: "الصيغة الرياضية لطاقة الوضع الجاذبية:", options: ["½mv²", "mgh", "mc²", "F·d"], correctIndex: 1, explanation: "PE = m·g·h." },
+    { question: "إذا تضاعفت سرعة الجسم فإن طاقته الحركية:", options: ["تتضاعف", "تتضاعف 4 مرات", "تنخفض للنصف", "لا تتغير"], correctIndex: 1, explanation: "KE ∝ v² ⇒ مضاعفة v تضرب KE في 4." },
+    { question: "إذا كانت الطاقة الميكانيكية 70J والحركية 20J، فطاقة الوضع:", options: ["90 J", "50 J", "70 J", "20 J"], correctIndex: 1, explanation: "E = KE + PE ⇒ PE = 70−20 = 50 J." },
+    { question: "في التصادم المرن تماماً:", options: ["تقل الطاقة الحركية", "تزداد الطاقة الحركية", "تُحفظ الطاقة الحركية", "يفنى الزخم"], correctIndex: 2, explanation: "في التصادم المرن: KE قبل = KE بعد." },
+  ],
+  "g2-heat": [
+    { question: "الصيغة الرياضية لكمية الحرارة:", options: ["Q = m·v", "Q = m·C·ΔT", "Q = ½mv²", "Q = F·d"], correctIndex: 1, explanation: "Q = m·C·ΔT حيث C الحرارة النوعية." },
+    { question: "أنبوب نحاسي 2.3 كغ، C = 385، ΔT = 60°C، كمية الحرارة:", options: ["53130 J", "1380 J", "885 J", "5313 J"], correctIndex: 0, explanation: "Q = 2.3 × 385 × 60 = 53130 J." },
+    { question: "تنتقل الحرارة في الفراغ عن طريق:", options: ["التوصيل", "الحمل", "الإشعاع", "لا تنتقل"], correctIndex: 2, explanation: "الإشعاع لا يحتاج وسطاً مادياً." },
+    { question: "تحويل 27°C إلى كلفن:", options: ["246 K", "300 K", "27 K", "273 K"], correctIndex: 1, explanation: "K = °C + 273 = 27 + 273 = 300 K." },
+  ],
 };
