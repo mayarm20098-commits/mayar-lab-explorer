@@ -24,13 +24,12 @@ import { PhotoelectricLab } from "./g3s2/PhotoelectricLab";
 import { BohrLab } from "./g3s2/BohrLab";
 import { SemiconductorLab } from "./g3s2/SemiconductorLab";
 import { HalfLifeLab } from "./g3s2/HalfLifeLab";
-import { PressureLab } from "./g2/PressureLab";
-import { BuoyancyLab } from "./g2/BuoyancyLab";
-import { GasLawLab } from "./g2/GasLawLab";
-import { PendulumLab } from "./g2/PendulumLab";
-import { WaveLab } from "./g2/WaveLab";
-import { DopplerLab } from "./g2/DopplerLab";
-import { ReflectionLab } from "./g2/ReflectionLab";
+import { GravityLab } from "./g2/GravityLab";
+import { RotationLab } from "./g2/RotationLab";
+import { MomentumLab } from "./g2/MomentumLab";
+import { MachinesLab } from "./g2/MachinesLab";
+import { EnergyLab } from "./g2/EnergyLab";
+import { HeatLab } from "./g2/HeatLab";
 
 type LabMeta = {
   title: string;
@@ -194,46 +193,40 @@ export const labRegistry: Record<string, LabMeta> = {
   },
 
   // ===== ثاني ثانوي =====
-  "g2s1-pressure": {
-    title: "الضغط في السوائل",
-    goal: "اكتشفي تأثير العمق وكثافة السائل على الضغط الذي يتعرض له الغوّاص.",
-    conclusion: "P = ρ · g · h\nالضغط يزداد طردياً مع العمق وكثافة السائل، ولا يعتمد على شكل الإناء.",
-    Component: PressureLab,
+  "g2-gravity": {
+    title: "قانون نيوتن للجاذبية الكونية",
+    goal: "غيّري كتلتي جسمين والمسافة بينهما واحسبي قوة الجاذبية المتبادلة.",
+    conclusion: "F = G · m₁ · m₂ / r²\nالقوة طردية مع الكتلتين وعكسية مع مربع المسافة.",
+    Component: GravityLab,
   },
-  "g2s1-buoyancy": {
-    title: "قوة الطفو ومبدأ أرخميدس",
-    goal: "غيّري كثافة الجسم وحجمه واكتشفي متى يطفو ومتى يغرق.",
-    conclusion: "F_b = ρ_سائل · V_غمر · g\nيطفو الجسم إذا كانت كثافته أقل من كثافة السائل.",
-    Component: BuoyancyLab,
+  "g2-rotation": {
+    title: "العزم والحركة الدورانية",
+    goal: "حرّكي القوة وذراع الدوران واكتشفي العلاقة τ = r · F.",
+    conclusion: "العزم τ = r × F.\nكلما زاد ذراع الدوران زاد العزم لنفس القوة.",
+    Component: RotationLab,
   },
-  "g2s1-gas-law": {
-    title: "قانون الغاز المثالي",
-    goal: "غيّري الحجم ودرجة الحرارة وراقبي تغيّر الضغط وحركة الجزيئات.",
-    conclusion: "PV = nRT\nالضغط يزيد مع الحرارة ويقل مع زيادة الحجم.",
-    Component: GasLawLab,
+  "g2-momentum": {
+    title: "الزخم وقانون حفظه",
+    goal: "حاكي تصادم كرتين بسرعتين وكتلتين مختلفتين وتحقّقي من حفظ الزخم.",
+    conclusion: "p = m·v\nالزخم الكلي قبل التصادم = الزخم الكلي بعده في النظام المعزول.",
+    Component: MomentumLab,
   },
-  "g2s1-pendulum": {
-    title: "البندول البسيط",
-    goal: "اكتشفي العوامل المؤثرة في الزمن الدوري للبندول.",
-    conclusion: "T = 2π · √(L / g)\nالزمن الدوري يعتمد فقط على الطول والجاذبية، لا على الكتلة ولا السعة (لزوايا صغيرة).",
-    Component: PendulumLab,
+  "g2-machines": {
+    title: "الآلات البسيطة والفائدة الميكانيكية",
+    goal: "غيّري قوى الجهد والحمل والمسافات لحساب MA و IMA والكفاءة.",
+    conclusion: "IMA = d_e/d_r، MA = F_r/F_e\nالكفاءة = (MA/IMA) × 100%، وتقل بسبب الاحتكاك.",
+    Component: MachinesLab,
   },
-  "g2s2-wave": {
-    title: "خصائص الموجات",
-    goal: "تحكّمي بالسعة والتردد والطول الموجي وحلّلي العلاقة بينها.",
-    conclusion: "v = f · λ\nالسعة تحدّد الطاقة، أمّا التردد والطول الموجي فيحدّدان السرعة.",
-    Component: WaveLab,
+  "g2-energy": {
+    title: "حفظ الطاقة الميكانيكية",
+    goal: "أسقطي كرة من ارتفاعات مختلفة وراقبي تحوّل طاقة الوضع إلى طاقة حركية.",
+    conclusion: "PE + KE = ثابت\nطاقة الوضع تتحول كاملة إلى طاقة حركية في غياب الاحتكاك.",
+    Component: EnergyLab,
   },
-  "g2s2-doppler": {
-    title: "تأثير دوبلر",
-    goal: "حرّكي مصدر الصوت نحو المراقبة أو بعيداً عنها وراقبي تغيّر التردد.",
-    conclusion: "f' = f₀ · c / (c − v_s)\nاقتراب المصدر يرفع التردد المسموع، وابتعاده يخفّضه.",
-    Component: DopplerLab,
-  },
-  "g2s2-reflection": {
-    title: "انعكاس الضوء",
-    goal: "غيّري زاوية شعاع الليزر على المرآة وتحقّقي من قانون الانعكاس.",
-    conclusion: "θᵢ = θᵣ\nالشعاع الساقط والمنعكس والعمودي يقعون في مستوى واحد.",
-    Component: ReflectionLab,
+  "g2-heat": {
+    title: "الحرارة والحرارة النوعية",
+    goal: "اختاري المادة والكتلة وفرق الحرارة واحسبي كمية الحرارة الممتصة.",
+    conclusion: "Q = m · C · ΔT\nالماء له حرارة نوعية كبيرة لذا يحتاج طاقة أكبر للتسخين.",
+    Component: HeatLab,
   },
 };
