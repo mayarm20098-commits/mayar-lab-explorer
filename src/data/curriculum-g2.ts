@@ -14,17 +14,8 @@ export type G2Chapter = {
   lessons: G2Lesson[];
 };
 
-export type G2Semester = {
-  id: "s1" | "s2";
-  title: string;
-  subtitle: string;
-  emoji: string;
-  enabled: boolean;
-  chapters: G2Chapter[];
-};
-
-// منهج ثاني ثانوي - الفصل الدراسي الأول (3 فصول)
-export const grade2Sem1Chapters: G2Chapter[] = [
+// منهج ثاني ثانوي - ٦ فصول في كتاب واحد
+export const grade2Chapters: G2Chapter[] = [
   {
     id: "g2-ch1",
     number: 1,
@@ -70,10 +61,6 @@ export const grade2Sem1Chapters: G2Chapter[] = [
       },
     ],
   },
-];
-
-// منهج ثاني ثانوي - الفصل الدراسي الثاني (3 فصول)
-export const grade2Sem2Chapters: G2Chapter[] = [
   {
     id: "g2-ch4",
     number: 4,
@@ -121,39 +108,16 @@ export const grade2Sem2Chapters: G2Chapter[] = [
   },
 ];
 
-export const grade2Semesters: G2Semester[] = [
-  {
-    id: "s1",
-    title: "الفصل الدراسي الأول",
-    subtitle: "3 فصول • متاح الآن",
-    emoji: "📘",
-    enabled: true,
-    chapters: grade2Sem1Chapters,
-  },
-  {
-    id: "s2",
-    title: "الفصل الدراسي الثاني",
-    subtitle: "3 فصول • متاح الآن",
-    emoji: "📗",
-    enabled: true,
-    chapters: grade2Sem2Chapters,
-  },
-];
-
-export function findG2Lesson(semesterId: string, chapterId: string, lessonId: string) {
-  const semester = grade2Semesters.find((s) => s.id === semesterId);
-  if (!semester) return null;
-  const chapter = semester.chapters.find((c) => c.id === chapterId);
+export function findG2Lesson(chapterId: string, lessonId: string) {
+  const chapter = grade2Chapters.find((c) => c.id === chapterId);
   if (!chapter) return null;
   const lesson = chapter.lessons.find((l) => l.id === lessonId);
   if (!lesson) return null;
-  return { semester, chapter, lesson };
+  return { chapter, lesson };
 }
 
 export function getAllG2LabIds(): string[] {
   const set = new Set<string>();
-  for (const sem of grade2Semesters) {
-    for (const c of sem.chapters) for (const l of c.lessons) if (l.lab) set.add(`g2:${l.lab}`);
-  }
+  for (const c of grade2Chapters) for (const l of c.lessons) if (l.lab) set.add(`g2:${l.lab}`);
   return Array.from(set);
 }
