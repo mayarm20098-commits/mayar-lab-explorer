@@ -1,16 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, FlaskConical } from "lucide-react";
-import { grade2Semesters } from "@/data/curriculum-g2";
+import { ArrowLeft, FlaskConical, BookOpenText } from "lucide-react";
+import { grade2Chapters, type G2Lesson } from "@/data/curriculum-g2";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MiyarAssistant } from "@/components/MiyarAssistant";
 
-export const Route = createFileRoute("/grade-2/$semesterId/$chapterId/")({
+export const Route = createFileRoute("/grade-2/$chapterId/")({
   loader: ({ params }) => {
-    const semester = grade2Semesters.find((s) => s.id === params.semesterId);
-    if (!semester) throw notFound();
-    const chapter = semester.chapters.find((c) => c.id === params.chapterId);
+    const chapter = grade2Chapters.find((c) => c.id === params.chapterId);
     if (!chapter) throw notFound();
-    return { semester, chapter };
+    return { chapter };
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -21,25 +19,21 @@ export const Route = createFileRoute("/grade-2/$semesterId/$chapterId/")({
   component: ChapterPage,
   notFoundComponent: () => (
     <div className="min-h-screen flex items-center justify-center">
-      <Link to="/grade-2" className="text-primary font-bold">عودة</Link>
+      <Link to="/grade-2" className="text-primary font-bold">عودة للفصول</Link>
     </div>
   ),
 });
 
 function ChapterPage() {
-  const { semester, chapter } = Route.useLoaderData();
+  const { chapter } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
       <section className="container mx-auto px-4 pt-10 pb-8 max-w-4xl">
-        <Link
-          to="/grade-2/$semesterId"
-          params={{ semesterId: semester.id }}
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-6 transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4 rotate-180" /> {semester.title}
+        <Link to="/grade-2" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-6 transition-colors">
+          <ArrowLeft className="h-4 w-4 rotate-180" /> فصول ثاني ثانوي
         </Link>
 
         <div className="text-center mb-10">
@@ -52,11 +46,11 @@ function ChapterPage() {
         </div>
 
         <div className="grid gap-3">
-          {chapter.lessons.map((lesson, i) => (
+          {chapter.lessons.map((lesson: G2Lesson, i: number) => (
             <Link
               key={lesson.id}
-              to="/grade-2/$semesterId/$chapterId/$lessonId"
-              params={{ semesterId: semester.id, chapterId: chapter.id, lessonId: lesson.id }}
+              to="/grade-2/$chapterId/$lessonId"
+              params={{ chapterId: chapter.id, lessonId: lesson.id }}
               className="group rounded-2xl bg-card border-2 border-border hover:border-primary hover:shadow-soft p-5 flex items-center gap-4 transition-all animate-pop-in"
               style={{ animationDelay: `${i * 0.05}s` }}
             >
@@ -74,13 +68,23 @@ function ChapterPage() {
                 </h3>
                 <p className="text-sm text-muted-foreground mt-0.5">{lesson.summary}</p>
               </div>
-              <FlaskConical className="h-5 w-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="flex items-center gap-1 text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                {lesson.lab ? <FlaskConical className="h-5 w-5" /> : <BookOpenText className="h-5 w-5" />}
+                <ArrowLeft className="h-4 w-4" />
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      <MiyarAssistant message={{ text: "اختاري الدرس وستجدين تجربة تفاعلية فريدة 🧪", mood: "happy" }} />
+      <MiyarAssistant
+        message={{
+          text: chapter.lessons.some((l: G2Lesson) => l.lab)
+            ? "هذا الفصل يحتوي على تجربة مختبر تفاعلية! ابحثي عن أيقونة المختبر 🧪"
+            : "اختاري درساً للبدء. سأكون معكِ في كل خطوة!",
+          mood: "happy",
+        }}
+      />
     </div>
   );
 }

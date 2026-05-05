@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, BookOpenText } from "lucide-react";
-import { findG2Lesson, grade2Semesters } from "@/data/curriculum-g2";
+import { findG2Lesson } from "@/data/curriculum-g2";
 import { quizzes } from "@/data/quizzes";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MiyarAssistant, type MiyarMessage } from "@/components/MiyarAssistant";
@@ -11,11 +11,9 @@ import { CompletionPanel } from "@/components/CompletionPanel";
 import { labRegistry } from "@/components/labs/registry";
 import { useLabProgress } from "@/lib/use-lab-progress";
 
-export const Route = createFileRoute("/grade-2/$semesterId/$chapterId/$lessonId")({
+export const Route = createFileRoute("/grade-2/$chapterId/$lessonId")({
   loader: ({ params }) => {
-    const semester = grade2Semesters.find((s) => s.id === params.semesterId);
-    if (!semester) throw notFound();
-    const found = findG2Lesson(params.semesterId, params.chapterId, params.lessonId);
+    const found = findG2Lesson(params.chapterId, params.lessonId);
     if (!found) throw notFound();
     return found;
   },
@@ -34,7 +32,7 @@ export const Route = createFileRoute("/grade-2/$semesterId/$chapterId/$lessonId"
 });
 
 function LessonPage() {
-  const { semester, chapter, lesson } = Route.useLoaderData();
+  const { chapter, lesson } = Route.useLoaderData();
   const labKey = lesson.lab;
   const labId = labKey ? `g2:${labKey}` : "";
   const { progress, saveResult } = useLabProgress(labId);
@@ -60,8 +58,8 @@ function LessonPage() {
 
       <section className="container mx-auto px-4 pt-8 pb-24 max-w-6xl">
         <Link
-          to="/grade-2/$semesterId/$chapterId"
-          params={{ semesterId: semester.id, chapterId: chapter.id }}
+          to="/grade-2/$chapterId"
+          params={{ chapterId: chapter.id }}
           className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-5 transition-colors"
         >
           <ArrowLeft className="h-4 w-4 rotate-180" /> {chapter.title}

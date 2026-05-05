@@ -52,7 +52,7 @@ function ChapterPage() {
         </div>
 
         <div className="grid gap-3">
-          {chapter.lessons.map((lesson, i) => (
+          {chapter.lessons.map((lesson: { id: string; title: string; lab?: string; summary: string }, i: number) => (
             <Link
               key={lesson.id}
               to="/grade-3/$semesterId/$chapterId/$lessonId"
