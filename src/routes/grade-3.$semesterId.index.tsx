@@ -60,7 +60,7 @@ function SemesterPage() {
 
       <section className="container mx-auto px-4 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
-          {semester.chapters.map((ch, i) => (
+          {semester.chapters.map((ch: { id: string; number: number; title: string; description: string; emoji: string; lessons: unknown[] }, i: number) => (
             <Link
               key={ch.id}
               to="/grade-3/$semesterId/$chapterId"
