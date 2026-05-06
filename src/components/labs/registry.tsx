@@ -25,11 +25,23 @@ import { BohrLab } from "./g3s2/BohrLab";
 import { SemiconductorLab } from "./g3s2/SemiconductorLab";
 import { HalfLifeLab } from "./g3s2/HalfLifeLab";
 import { GravityLab } from "./g2/GravityLab";
+import { KeplerLab } from "./g2/KeplerLab";
+import { WeightlessLab } from "./g2/WeightlessLab";
 import { RotationLab } from "./g2/RotationLab";
+import { AngularMotionLab } from "./g2/AngularMotionLab";
+import { EquilibriumLab } from "./g2/EquilibriumLab";
 import { MomentumLab } from "./g2/MomentumLab";
+import { ImpulseLab } from "./g2/ImpulseLab";
+import { CollisionTypeLab } from "./g2/CollisionTypeLab";
 import { MachinesLab } from "./g2/MachinesLab";
+import { WorkPowerLab } from "./g2/WorkPowerLab";
+import { PulleyLab } from "./g2/PulleyLab";
 import { EnergyLab } from "./g2/EnergyLab";
+import { SpringEnergyLab } from "./g2/SpringEnergyLab";
+import { RollerCoasterLab } from "./g2/RollerCoasterLab";
 import { HeatLab } from "./g2/HeatLab";
+import { ThermalExpansionLab } from "./g2/ThermalExpansionLab";
+import { PhaseChangeLab } from "./g2/PhaseChangeLab";
 
 type LabMeta = {
   title: string;
