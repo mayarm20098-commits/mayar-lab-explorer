@@ -25,11 +25,23 @@ import { BohrLab } from "./g3s2/BohrLab";
 import { SemiconductorLab } from "./g3s2/SemiconductorLab";
 import { HalfLifeLab } from "./g3s2/HalfLifeLab";
 import { GravityLab } from "./g2/GravityLab";
+import { KeplerLab } from "./g2/KeplerLab";
+import { WeightlessLab } from "./g2/WeightlessLab";
 import { RotationLab } from "./g2/RotationLab";
+import { AngularMotionLab } from "./g2/AngularMotionLab";
+import { EquilibriumLab } from "./g2/EquilibriumLab";
 import { MomentumLab } from "./g2/MomentumLab";
+import { ImpulseLab } from "./g2/ImpulseLab";
+import { CollisionTypeLab } from "./g2/CollisionTypeLab";
 import { MachinesLab } from "./g2/MachinesLab";
+import { WorkPowerLab } from "./g2/WorkPowerLab";
+import { PulleyLab } from "./g2/PulleyLab";
 import { EnergyLab } from "./g2/EnergyLab";
+import { SpringEnergyLab } from "./g2/SpringEnergyLab";
+import { RollerCoasterLab } from "./g2/RollerCoasterLab";
 import { HeatLab } from "./g2/HeatLab";
+import { ThermalExpansionLab } from "./g2/ThermalExpansionLab";
+import { PhaseChangeLab } from "./g2/PhaseChangeLab";
 
 type LabMeta = {
   title: string;
@@ -228,5 +240,77 @@ export const labRegistry: Record<string, LabMeta> = {
     goal: "اختاري المادة والكتلة وفرق الحرارة واحسبي كمية الحرارة الممتصة.",
     conclusion: "Q = m · C · ΔT\nالماء له حرارة نوعية كبيرة لذا يحتاج طاقة أكبر للتسخين.",
     Component: HeatLab,
+  },
+  "g2-kepler": {
+    title: "قوانين كبلر للحركة الكوكبية",
+    goal: "غيّري نصف المحور والشذوذ وراقبي حركة الكوكب وزمن دورانه.",
+    conclusion: "1) المدارات إهليلجية. 2) المساحات المتساوية في أزمنة متساوية. 3) T² ∝ a³.",
+    Component: KeplerLab,
+  },
+  "g2-weightless": {
+    title: "انعدام الوزن في المصعد",
+    goal: "غيّري تسارع المصعد ولاحظي الوزن الظاهري للراكب، واكتشفي شرط انعدام الوزن.",
+    conclusion: "F_app = m·(g + a). عند a = −g يصبح الوزن الظاهري صفراً ⇒ انعدام الوزن.",
+    Component: WeightlessLab,
+  },
+  "g2-angular": {
+    title: "الإزاحة والسرعة الزاوية",
+    goal: "حركي جسماً في مسار دائري واكتشفي العلاقة بين الكميات الزاوية والخطية.",
+    conclusion: "v = ω·r، T = 2π/ω. الإزاحة الزاوية تقاس بالراديان.",
+    Component: AngularMotionLab,
+  },
+  "g2-equilibrium": {
+    title: "اتزان الميزان والعزوم",
+    goal: "ضعي كتلتين على ميزان وحاولي تحقيق الاتزان عبر تساوي العزمين.",
+    conclusion: "شرط الاتزان الدوراني: Στ = 0 ⇒ m₁·d₁ = m₂·d₂.",
+    Component: EquilibriumLab,
+  },
+  "g2-impulse": {
+    title: "الدفع وتغير الزخم",
+    goal: "غيّري القوة وزمن التأثير واحسبي الدفع وتغير سرعة الجسم.",
+    conclusion: "J = F·Δt = ΔP. زيادة زمن التأثير تقلل القوة المؤثرة.",
+    Component: ImpulseLab,
+  },
+  "g2-collision-type": {
+    title: "التصادمات المرنة وغير المرنة",
+    goal: "قارني بين التصادم المرن وغير المرن وراقبي حفظ الزخم والطاقة الحركية.",
+    conclusion: "المرن: KE والزخم محفوظان. غير المرن: الزخم محفوظ فقط، KE تتحول لحرارة.",
+    Component: CollisionTypeLab,
+  },
+  "g2-work-power": {
+    title: "الشغل والقدرة",
+    goal: "احسبي الشغل بزاوية مختلفة والقدرة الناتجة عن العمل في زمن معين.",
+    conclusion: "W = F·d·cos(θ)، P = W/t. عند θ = 90° الشغل = صفر.",
+    Component: WorkPowerLab,
+  },
+  "g2-pulley": {
+    title: "البكرات المركبة",
+    goal: "غيّري عدد الحبال الداعمة وراقبي تقلّص قوة الجهد المطلوبة.",
+    conclusion: "IMA = عدد الحبال الداعمة. F = الحمل/IMA. الكفاءة تقل بسبب الاحتكاك.",
+    Component: PulleyLab,
+  },
+  "g2-spring": {
+    title: "طاقة الزنبرك (الوضع المرن)",
+    goal: "اضغطي زنبركاً واطلقيه وراقبي تحوّل الطاقة بين وضع وحركة.",
+    conclusion: "PE = ½·k·x²، E = PE + KE = ثابت في غياب الاحتكاك.",
+    Component: SpringEnergyLab,
+  },
+  "g2-coaster": {
+    title: "الأفعوانية وحفظ الطاقة",
+    goal: "اضبطي ارتفاع البداية وراقبي تحوّل PE إلى KE على المسار.",
+    conclusion: "v = √(2g(h₀−h)). الطاقة الميكانيكية تبقى ثابتة دون احتكاك.",
+    Component: RollerCoasterLab,
+  },
+  "g2-expansion": {
+    title: "التمدد الحراري للمواد",
+    goal: "اختاري المادة وغيّري درجة الحرارة وقيسي مقدار التمدد الطولي.",
+    conclusion: "ΔL = α·L₀·ΔT. كل مادة لها معامل تمدد α خاص بها.",
+    Component: ThermalExpansionLab,
+  },
+  "g2-phase": {
+    title: "تغيرات الحالة (انصهار وتبخر)",
+    goal: "أضيفي حرارة للماء وراقبي مراحل التحول من جليد إلى ماء إلى بخار.",
+    conclusion: "Q = m·L أثناء تغير الحالة. الحرارة الكامنة تكسر الروابط دون رفع الحرارة.",
+    Component: PhaseChangeLab,
   },
 };
