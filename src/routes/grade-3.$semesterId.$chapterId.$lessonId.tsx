@@ -15,8 +15,7 @@ export const Route = createFileRoute("/grade-3/$semesterId/$chapterId/$lessonId"
   loader: ({ params }) => {
     const semester = grade3Semesters.find((s) => s.id === params.semesterId);
     if (!semester) throw notFound();
-    if (params.semesterId !== "s2") throw notFound(); // only s2 for now
-    const found = findG3S2Lesson(params.chapterId, params.lessonId);
+    const found = findG3Lesson(params.semesterId, params.chapterId, params.lessonId);
     if (!found) throw notFound();
     return { semester, ...found };
   },
