@@ -36,7 +36,7 @@ export const Route = createFileRoute("/grade-3/$semesterId/$chapterId/$lessonId"
 function LessonPage() {
   const { semester, chapter, lesson } = Route.useLoaderData();
   const labKey = lesson.lab;
-  const labId = labKey ? `g3s2:${labKey}` : "";
+  const labId = labKey ? `${semester.id}:${labKey}` : "";
   const { progress, saveResult } = useLabProgress(labId);
 
   const [miyarMsg, setMiyarMsg] = useState<MiyarMessage | null>({
