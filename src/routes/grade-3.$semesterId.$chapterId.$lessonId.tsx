@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, BookOpenText } from "lucide-react";
-import { findG3S2Lesson, grade3Semesters } from "@/data/curriculum-g3";
+import { findG3Lesson, grade3Semesters } from "@/data/curriculum-g3";
 import { quizzes } from "@/data/quizzes";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MiyarAssistant, type MiyarMessage } from "@/components/MiyarAssistant";
