@@ -24,6 +24,16 @@ import { PhotoelectricLab } from "./g3s2/PhotoelectricLab";
 import { BohrLab } from "./g3s2/BohrLab";
 import { SemiconductorLab } from "./g3s2/SemiconductorLab";
 import { HalfLifeLab } from "./g3s2/HalfLifeLab";
+import { PendulumLab as G3S1Pendulum } from "./g3s1/PendulumLab";
+import { SoundWaveLab } from "./g3s1/SoundWaveLab";
+import { ReflectionLab } from "./g3s1/ReflectionLab";
+import { MirrorLab } from "./g3s1/MirrorLab";
+import { RefractionLab } from "./g3s1/RefractionLab";
+import { LensLab } from "./g3s1/LensLab";
+import { DiffractionLab } from "./g3s1/DiffractionLab";
+import { CoulombLab } from "./g3s1/CoulombLab";
+import { ElectricFieldLab } from "./g3s1/ElectricFieldLab";
+import { CapacitorLab } from "./g3s1/CapacitorLab";
 import { GravityLab } from "./g2/GravityLab";
 import { KeplerLab } from "./g2/KeplerLab";
 import { WeightlessLab } from "./g2/WeightlessLab";
@@ -140,6 +150,68 @@ export const labRegistry: Record<string, LabMeta> = {
     goal: "غيّري سرعة القارب والتيار، واكتشفي السرعة الفعلية.",
     conclusion: "السرعة النسبية = حاصل جمع المتجهات.\nمع التيار: v_eff = v + v_t. عكسه: v_eff = v − v_t.",
     Component: RelativeVelocityLab,
+  },
+
+  // ===== ثالث ثانوي - الفصل الدراسي الأول =====
+  "g3s1-pendulum": {
+    title: "البندول البسيط",
+    goal: "اكتشفي العلاقة بين طول البندول والجاذبية والزمن الدوري.",
+    conclusion: "T = 2π√(L/g). الزمن الدوري لا يعتمد على الكتلة ولا الزاوية (للزوايا الصغيرة).",
+    Component: G3S1Pendulum,
+  },
+  "g3s1-sound": {
+    title: "الموجات الصوتية وأثر دوبلر",
+    goal: "حركي المصدر الصوتي وراقبي تغير التردد المسموع.",
+    conclusion: "f' = f₀·v/(v − vₛ). اقتراب المصدر يرفع التردد، وابتعاده يخفّضه.",
+    Component: SoundWaveLab,
+  },
+  "g3s1-reflection": {
+    title: "انعكاس الضوء",
+    goal: "تحقّقي من قانون الانعكاس θᵢ = θᵣ.",
+    conclusion: "زاوية السقوط = زاوية الانعكاس بالنسبة للعمود المُقام، وكل الأشعة في مستوى واحد.",
+    Component: ReflectionLab,
+  },
+  "g3s1-mirror": {
+    title: "المرايا الكروية",
+    goal: "تتبّعي الأشعة لتكوين الصور في المرايا المقعّرة والمحدّبة.",
+    conclusion: "1/f = 1/dₒ + 1/dᵢ. المقعّرة تكوّن صوراً حقيقية أو وهمية حسب موقع الجسم؛ المحدّبة دائماً وهمية مصغّرة.",
+    Component: MirrorLab,
+  },
+  "g3s1-refraction": {
+    title: "انكسار الضوء (سنل)",
+    goal: "اضبطي معاملي الانكسار وراقبي الانعكاس الكلي الداخلي.",
+    conclusion: "n₁ sinθ₁ = n₂ sinθ₂. الزاوية الحرجة θc = sin⁻¹(n₂/n₁) عند المرور لوسط أقل كثافة.",
+    Component: RefractionLab,
+  },
+  "g3s1-lens": {
+    title: "العدسات الرقيقة",
+    goal: "تتبّعي الأشعة لتكوين الصور في العدسات.",
+    conclusion: "1/f = 1/dₒ + 1/dᵢ. المحدّبة تجمع الأشعة، والمقعّرة تشتّتها وتعطي صورة وهمية مصغّرة.",
+    Component: LensLab,
+  },
+  "g3s1-diffraction": {
+    title: "تجربة يونغ — التداخل والحيود",
+    goal: "غيّري الطول الموجي وفجوة الشقّين وراقبي تباعد الهدب.",
+    conclusion: "y_m = m·λ·L/d. زيادة λ أو L تباعد الهدب، وزيادة d تقلّل التباعد.",
+    Component: DiffractionLab,
+  },
+  "g3s1-coulomb": {
+    title: "قانون كولوم",
+    goal: "احسبي قوة التجاذب/التنافر بين شحنتين.",
+    conclusion: "F = k·|q₁·q₂|/r². القوة عكسياً مع مربع المسافة.",
+    Component: CoulombLab,
+  },
+  "g3s1-field": {
+    title: "المجال الكهربائي وخطوطه",
+    goal: "ارسمي خطوط المجال الكهربائي حول شحنة نقطية.",
+    conclusion: "E = k·q/r² (N/C). الخطوط تخرج من الموجبة وتدخل السالبة، وكثافتها تدل على شدة المجال.",
+    Component: ElectricFieldLab,
+  },
+  "g3s1-capacitor": {
+    title: "السعة الكهربائية والمكثّفات",
+    goal: "غيّري مساحة اللوحين والمسافة وثابت العزل واحسبي C و Q و U.",
+    conclusion: "C = κ·ε₀·A/d، Q = CV، U = ½CV². العازل يزيد السعة بمقدار κ.",
+    Component: CapacitorLab,
   },
 
   // ===== ثالث ثانوي - الفصل الدراسي الثاني =====
