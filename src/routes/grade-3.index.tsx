@@ -77,7 +77,7 @@ function Grade3Page() {
       </section>
 
       <MiyarAssistant
-        message={{ text: "الفصل الدراسي الثاني متاح بالكامل! 9 مختبرات تفاعلية تنتظركِ ✨", mood: "happy" }}
+        message={{ text: "الفصلان الدراسيان متاحان! 15 مختبراً تفاعلياً ينتظركِ ✨", mood: "happy" }}
       />
     </div>
   );

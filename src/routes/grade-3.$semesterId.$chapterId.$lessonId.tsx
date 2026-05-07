@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, BookOpenText } from "lucide-react";
-import { findG3S2Lesson, grade3Semesters } from "@/data/curriculum-g3";
+import { findG3Lesson, grade3Semesters } from "@/data/curriculum-g3";
 import { quizzes } from "@/data/quizzes";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MiyarAssistant, type MiyarMessage } from "@/components/MiyarAssistant";
@@ -15,8 +15,7 @@ export const Route = createFileRoute("/grade-3/$semesterId/$chapterId/$lessonId"
   loader: ({ params }) => {
     const semester = grade3Semesters.find((s) => s.id === params.semesterId);
     if (!semester) throw notFound();
-    if (params.semesterId !== "s2") throw notFound(); // only s2 for now
-    const found = findG3S2Lesson(params.chapterId, params.lessonId);
+    const found = findG3Lesson(params.semesterId, params.chapterId, params.lessonId);
     if (!found) throw notFound();
     return { semester, ...found };
   },
@@ -37,7 +36,7 @@ export const Route = createFileRoute("/grade-3/$semesterId/$chapterId/$lessonId"
 function LessonPage() {
   const { semester, chapter, lesson } = Route.useLoaderData();
   const labKey = lesson.lab;
-  const labId = labKey ? `g3s2:${labKey}` : "";
+  const labId = labKey ? `${semester.id}:${labKey}` : "";
   const { progress, saveResult } = useLabProgress(labId);
 
   const [miyarMsg, setMiyarMsg] = useState<MiyarMessage | null>({

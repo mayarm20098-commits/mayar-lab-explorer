@@ -487,4 +487,65 @@ export const quizzes: Record<string, QuizQuestion[]> = {
     { question: "حرارة انصهار الماء 334 kJ/kg، اللازمة لإذابة 0.5kg جليد:", options: ["167 kJ", "668 kJ", "334 kJ", "33.4 kJ"], correctIndex: 0, explanation: "Q = 0.5 × 334 = 167 kJ." },
     { question: "حرارة التبخر للماء أكبر من حرارة الانصهار لأن:", options: ["الماء أثقل", "كسر الروابط للحالة الغازية يحتاج طاقة أكبر", "البخار أبرد", "خطأ في القياس"], correctIndex: 1, explanation: "الانتقال للغاز يحتاج فك كل الروابط." },
   ],
+  // ===== ثالث ثانوي - الفصل الدراسي الأول =====
+  "g3s1-pendulum": [
+    { question: "صيغة الزمن الدوري للبندول البسيط:", options: ["T = 2π√(L/g)", "T = 2π√(g/L)", "T = √(L·g)", "T = L/g"], correctIndex: 0, explanation: "الزمن يعتمد على الطول والجاذبية فقط." },
+    { question: "بندول طوله 1م على الأرض (g=9.8). الزمن الدوري ≈:", options: ["1 ث", "2 ث", "0.5 ث", "3.14 ث"], correctIndex: 1, explanation: "T = 2π√(1/9.8) ≈ 2.01 ث." },
+    { question: "إذا نُقل البندول إلى القمر فإن زمنه:", options: ["يقل", "يزداد", "لا يتغير", "يصبح صفراً"], correctIndex: 1, explanation: "g أقل ⇒ T = 2π√(L/g) أكبر." },
+    { question: "الزمن الدوري لا يعتمد على:", options: ["الطول", "الجاذبية", "كتلة الثقل", "كل ما سبق"], correctIndex: 2, explanation: "الكتلة تختصر من المعادلة." },
+  ],
+  "g3s1-sound": [
+    { question: "عند اقتراب مصدر الصوت من الراصد فإن التردد المسموع:", options: ["يزداد", "يقل", "لا يتغير", "ينعدم"], correctIndex: 0, explanation: "أثر دوبلر: الموجات تتراص فتزداد f." },
+    { question: "سرعة الصوت في الهواء عند 20°C ≈:", options: ["343 m/s", "1500 m/s", "3×10⁸ m/s", "100 m/s"], correctIndex: 0, explanation: "تختلف بحرارة الوسط." },
+    { question: "صفّارة قطار يصدر 500Hz ويتحرك بـ34 m/s نحوك. التردد المسموع ≈ (v=343):", options: ["455 Hz", "555 Hz", "500 Hz", "600 Hz"], correctIndex: 1, explanation: "f' = 500·343/(343−34) ≈ 555." },
+    { question: "أثر دوبلر يحدث بسبب:", options: ["تغير شدة الصوت", "حركة نسبية بين المصدر والراصد", "اختلاف الوسط", "البعد عن الأرض"], correctIndex: 1, explanation: "الحركة النسبية تغيّر التردد المرصود." },
+  ],
+  "g3s1-reflection": [
+    { question: "قانون الانعكاس ينص على:", options: ["θᵢ < θᵣ", "θᵢ > θᵣ", "θᵢ = θᵣ", "θᵢ = 90°"], correctIndex: 2, explanation: "زاوية السقوط = زاوية الانعكاس." },
+    { question: "الزوايا تقاس بالنسبة إلى:", options: ["السطح العاكس", "العمود المُقام", "خط الأفق", "اتجاه الضوء"], correctIndex: 1, explanation: "العمود المقام نقطة السقوط." },
+    { question: "إذا سقط الشعاع عمودياً على المرآة (θ=0):", options: ["لا ينعكس", "ينعكس بزاوية 90°", "يعود بنفس المسار", "يمتص"], correctIndex: 2, explanation: "θᵣ = 0 أيضاً." },
+    { question: "في المرآة المستوية الصورة:", options: ["حقيقية مكبّرة", "وهمية معتدلة بنفس الحجم", "مقلوبة", "مصغّرة"], correctIndex: 1, explanation: "وهمية، خلف المرآة، بنفس الحجم." },
+  ],
+  "g3s1-mirror": [
+    { question: "معادلة المرايا الكروية:", options: ["1/f = 1/dₒ + 1/dᵢ", "f = dₒ·dᵢ", "f = dₒ + dᵢ", "1/f = dₒ + dᵢ"], correctIndex: 0, explanation: "الصيغة الأساسية لتكوين الصور." },
+    { question: "في المرآة المحدّبة الصورة دائماً:", options: ["حقيقية مكبّرة", "وهمية مصغّرة", "حقيقية مصغّرة", "بحجم الجسم"], correctIndex: 1, explanation: "تستخدم في مرايا السيارات." },
+    { question: "إذا وُضع جسم عند مركز التكور في مرآة مقعّرة:", options: ["تكون الصورة عند ∞", "وهمية", "حقيقية بنفس الحجم عند C", "صفر"], correctIndex: 2, explanation: "dᵢ=dₒ=2f، M=−1." },
+    { question: "البعد البؤري لمرآة محدّبة يعتبر:", options: ["موجباً", "سالباً", "صفراً", "لانهائياً"], correctIndex: 1, explanation: "اصطلاحاً البعد البؤري للمحدّبة سالب." },
+  ],
+  "g3s1-refraction": [
+    { question: "قانون سنل ينص على:", options: ["n₁ + n₂ = θ₁ + θ₂", "n₁ sinθ₁ = n₂ sinθ₂", "n₁/n₂ = θ₁/θ₂", "sinθ₁/sinθ₂ = n₁·n₂"], correctIndex: 1, explanation: "العلاقة الأساسية للانكسار." },
+    { question: "عند انتقال الضوء من ماء (n=1.33) إلى هواء (n=1):", options: ["يقترب من العمود", "يبتعد عن العمود", "لا ينحرف", "ينعكس فقط"], correctIndex: 1, explanation: "إلى وسط أقل كثافة ⇒ يبتعد." },
+    { question: "الانعكاس الكلي يحدث عندما:", options: ["θ < θc وفي الأقل كثافة", "θ > θc من الأكثف للأقل كثافة", "θ = 0", "n₁ = n₂"], correctIndex: 1, explanation: "شرطه أن نخرج لوسط أقل كثافة بزاوية أكبر من الحرجة." },
+    { question: "الزاوية الحرجة بين زجاج (n=1.5) وهواء:", options: ["≈42°", "≈30°", "≈60°", "≈90°"], correctIndex: 0, explanation: "θc = sin⁻¹(1/1.5) ≈ 41.8°." },
+  ],
+  "g3s1-lens": [
+    { question: "العدسة المحدّبة تعمل على:", options: ["تشتيت الأشعة", "تجميع الأشعة", "عكسها", "امتصاصها"], correctIndex: 1, explanation: "تسمى عدسة لامة." },
+    { question: "البعد البؤري لعدسة مقعّرة:", options: ["موجب", "سالب", "صفر", "متغير"], correctIndex: 1, explanation: "اصطلاحاً سالب." },
+    { question: "قوة العدسة تقاس بـ:", options: ["متر", "ديوبتر (1/m)", "نيوتن", "ثانية"], correctIndex: 1, explanation: "P = 1/f بالأمتار." },
+    { question: "جسم على بعد 30سم من عدسة محدّبة f=20سم. dᵢ:", options: ["12", "60", "−60", "10"], correctIndex: 1, explanation: "1/20 = 1/30 + 1/dᵢ ⇒ dᵢ=60سم." },
+  ],
+  "g3s1-diffraction": [
+    { question: "في تجربة يونغ المسافة بين الهدب:", options: ["y = mλL/d", "y = d/λ", "y = mL/(λd)", "y = λ/L"], correctIndex: 0, explanation: "الصيغة الأساسية للهدب المضيئة." },
+    { question: "إذا زاد الطول الموجي λ، فإن المسافة بين الهدب:", options: ["تقل", "تزداد", "تظل ثابتة", "تنعدم"], correctIndex: 1, explanation: "y ∝ λ." },
+    { question: "تجربة يونغ تثبت:", options: ["جسيمية الضوء", "موجية الضوء", "حرارية الضوء", "كهربية الضوء"], correctIndex: 1, explanation: "ظاهرة التداخل تثبت الطبيعة الموجية." },
+    { question: "λ=600nm، d=0.1mm، L=1m. y₁ ≈:", options: ["6 mm", "0.6 mm", "60 mm", "0.06 mm"], correctIndex: 0, explanation: "y = 600e-9·1/(0.1e-3) = 6 mm." },
+  ],
+  "g3s1-coulomb": [
+    { question: "قانون كولوم:", options: ["F = k·q₁·q₂/r²", "F = k·q/r", "F = q·E·r", "F = m·a"], correctIndex: 0, explanation: "تناسب طردي مع الشحنتين وعكسي مع r²." },
+    { question: "إذا ضاعفنا المسافة بين شحنتين، فإن القوة:", options: ["تتضاعف", "تصبح ربع القيمة", "تصبح نصف القيمة", "لا تتغير"], correctIndex: 1, explanation: "F ∝ 1/r²." },
+    { question: "شحنتان متماثلتان تتبادلان قوة:", options: ["تجاذب", "تنافر", "صفر", "تعتمد على البعد"], correctIndex: 1, explanation: "متماثلة في الإشارة ⇒ تنافر." },
+    { question: "ثابت كولوم k ≈:", options: ["6.67×10⁻¹¹", "8.99×10⁹", "9.8", "1.6×10⁻¹⁹"], correctIndex: 1, explanation: "k = 1/(4πε₀)." },
+  ],
+  "g3s1-field": [
+    { question: "وحدة المجال الكهربائي:", options: ["N/C أو V/m", "N·m", "C/s", "Ω"], correctIndex: 0, explanation: "E = F/q." },
+    { question: "خطوط المجال الكهربائي:", options: ["تتقاطع", "تخرج من السالبة", "تخرج من الموجبة وتدخل السالبة", "دائرية مغلقة"], correctIndex: 2, explanation: "اتجاهها من + إلى −." },
+    { question: "شدة المجال على بعد r من شحنة نقطية:", options: ["E = kq/r²", "E = kq/r", "E = q/r²", "E = qr²"], correctIndex: 0, explanation: "نفس صيغة كولوم لكل وحدة شحنة." },
+    { question: "كثافة خطوط المجال تدل على:", options: ["شحنة الجسم", "شدة المجال", "اتجاه الحركة", "الزمن"], correctIndex: 1, explanation: "كلما زادت الكثافة زادت E." },
+  ],
+  "g3s1-capacitor": [
+    { question: "سعة المكثّف ذو اللوحين:", options: ["C = κ·ε₀·A/d", "C = QV", "C = V/Q", "C = εd/A"], correctIndex: 0, explanation: "تتناسب طردياً مع A و κ، عكسياً مع d." },
+    { question: "إذا ضاعفنا المسافة بين اللوحين فإن السعة:", options: ["تتضاعف", "تنخفض للنصف", "ثابتة", "أربعة أضعاف"], correctIndex: 1, explanation: "C ∝ 1/d." },
+    { question: "الطاقة المخزنة في المكثّف:", options: ["U = ½CV²", "U = CV", "U = QV²", "U = ½QV²/C"], correctIndex: 0, explanation: "أيضاً U = Q²/(2C)." },
+    { question: "وضع عازل ثابته κ بين اللوحين:", options: ["يقلل السعة", "يزيد السعة بمعامل κ", "لا يؤثر", "يمنع الشحن"], correctIndex: 1, explanation: "C يصبح κ مرة C₀." },
+  ],
 };
